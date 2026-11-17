@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מצגת צרכים</title>
+<meta name="description" content="מצגת צרכים, קבוצה 2 · miLAB AI Co-Creation. דומיין: תהליכים עירוניים.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_base.css">
+<style>
+  :root {
+    --paper: oklch(97% 0.012 95);
+    --ink:   oklch(26% 0.035 250);
+    --route: oklch(56% 0.12 215);
+    --route-text: oklch(47% 0.11 220);
+    --route-soft: oklch(92% 0.035 215);
+    --dim: color-mix(in oklch, var(--ink) 64%, var(--paper));
+    --street: color-mix(in oklch, var(--ink) 3.2%, var(--paper));
+    --stage-bg: var(--paper); --slide-bg: var(--paper);
+  }
+  .slide {
+    font-family: 'Rubik', sans-serif; color: var(--ink); box-sizing: border-box; padding: 112px 136px 128px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 40px;
+    background-color: var(--paper);
+    background-image: linear-gradient(to right, var(--street) 12px, transparent 12px), linear-gradient(to bottom, var(--street) 12px, transparent 12px);
+    background-size: 360px 300px; background-position: 170px 140px;
+  }
+  .slide.dark {
+    --dim: color-mix(in oklch, var(--paper) 66%, var(--ink)); --street: color-mix(in oklch, var(--paper) 6%, var(--ink));
+    --route-text: oklch(76% 0.11 210); --route-soft: color-mix(in oklch, var(--route) 30%, var(--ink));
+    background-color: var(--ink); color: var(--paper);
+  }
+  h1, h2 { margin: 0; font-weight: 800; letter-spacing: -0.015em; line-height: 1.08; }
+  h1 { font-size: 176px; }
+  h2 { font-size: 80px; max-width: 1500px; }
+  p { margin: 0; }
+  .sub { font-size: 36px; line-height: 1.45; color: var(--dim); max-width: 1300px; }
+  .en { direction: ltr; unicode-bidi: isolate; }
+  .route { color: var(--route-text); }
+  svg.ic { width: 64px; height: 64px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+  .badge { width: 128px; height: 128px; border-radius: 50%; background: var(--route-soft); color: var(--route-text); display: grid; place-items: center; flex: none; }
+  .row { display: flex; gap: 56px; justify-content: center; align-items: flex-start; width: 100%; }
+  .item { flex: 1; max-width: 420px; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+  .item h3 { margin: 0; font-size: 40px; font-weight: 700; line-height: 1.2; }
+  .item p { font-size: 30px; line-height: 1.45; color: var(--dim); }
+  .bg-svg { position: absolute; inset: 0; width: 1920px; height: 1080px; max-width: none; max-height: none; pointer-events: none; }
+  .slide > *:not(.bg-svg):not(aside) { position: relative; }
+
+  /* Cover */
+  .cover h1 { font-size: 196px; }
+  .cover .domain { font-size: 54px; font-weight: 500; color: var(--route-text); }
+  .cover .meta { font-size: 28px; color: var(--dim); line-height: 1.55; margin-top: 8px; }
+
+  /* Domain: three stops on one line */
+  .stops { position: relative; display: flex; justify-content: space-between; width: 1380px; margin-top: 24px; }
+  .stops::before { content: ''; position: absolute; top: 64px; inset-inline: 140px; height: 8px; border-radius: 4px; background: repeating-linear-gradient(to left, var(--route) 0 40px, transparent 40px 60px); }
+  .stop { width: 340px; display: flex; flex-direction: column; align-items: center; gap: 28px; }
+  .stop .badge { box-shadow: 0 0 0 16px var(--paper); }
+  .stop h3 { margin: 0; font-size: 40px; font-weight: 700; }
+
+  /* Who we talked to: transit line */
+  .counts { display: flex; gap: 120px; justify-content: center; }
+  .count b { display: block; font-size: 128px; font-weight: 800; line-height: .9; color: var(--route-text); }
+  .count span { font-size: 32px; font-weight: 500; }
+  .line { position: relative; display: grid; grid-template-columns: repeat(6, 1fr); width: 1660px; margin-top: 16px; }
+  .line::before { content: ''; position: absolute; top: 28px; inset-inline: 120px; height: 10px; border-radius: 5px; background: var(--ink); }
+  .station { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 0 8px; }
+  .station i { width: 56px; height: 56px; border-radius: 50%; background: var(--paper); border: 10px solid var(--ink); box-sizing: border-box; }
+  .station h3 { margin: 6px 0 4px; font-size: 38px; font-weight: 700; }
+  .station p { font-size: 24px; line-height: 1.3; color: var(--dim); }
+  .station p.x { color: var(--route-text); font-weight: 700; }
+
+  /* Guy: route with three stops */
+  .guy-img { width: 820px; margin-bottom: -12px; }
+  .journey { display: flex; align-items: center; gap: 28px; margin-top: 12px; }
+  .leg { width: 440px; box-sizing: border-box; background: var(--paper); border: 4px solid var(--ink); border-radius: 36px; padding: 32px 36px; display: flex; flex-direction: column; gap: 12px; }
+  .leg small { font-size: 26px; font-weight: 700; color: var(--route-text); }
+  .leg p { font-size: 32px; line-height: 1.35; font-weight: 500; }
+  .leg.block { border-color: var(--route); background: var(--route-soft); }
+  .arrow { width: 56px; height: 56px; color: var(--route); flex: none; }
+
+  /* Municipality: 2x2 */
+  .quad { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; width: 1480px; }
+  .cell { background: var(--paper); border: 3px solid color-mix(in oklch, var(--ink) 14%, var(--paper)); border-radius: 36px; padding: 32px 40px; display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; }
+  .cell .badge { width: 104px; height: 104px; }
+  .cell h3 { margin: 0 0 6px; font-size: 38px; font-weight: 700; }
+  .cell p { font-size: 28px; line-height: 1.4; color: var(--dim); }
+
+  /* Quotes */
+  .quotes { display: flex; gap: 56px; justify-content: center; width: 100%; align-items: stretch; }
+  .q { flex: 1; max-width: 760px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
+  .bubble { position: relative; width: 100%; box-sizing: border-box; background: var(--ink); color: var(--paper); border-radius: 40px; padding: 48px 52px; font-size: 44px; font-weight: 500; line-height: 1.35; flex: 1; display: flex; align-items: center; justify-content: center; }
+  .bubble::after { content: ''; position: absolute; bottom: -18px; left: calc(50% - 18px); width: 36px; height: 36px; background: inherit; transform: rotate(45deg); border-radius: 6px; }
+  .bubble.light { background: var(--route-soft); color: var(--ink); }
+  .bubble.xl { font-size: 64px; font-weight: 700; }
+  .ctx { font-size: 28px; line-height: 1.45; color: var(--ink); max-width: 680px; }
+  .who { font-size: 26px; color: var(--dim); }
+
+  /* 8 of 10 */
+  .big { font-size: 230px; font-weight: 800; line-height: .85; color: var(--route-text); letter-spacing: -0.03em; }
+  .big small { font-size: 104px; color: var(--ink); }
+  .pins { display: flex; gap: 22px; }
+  .pin { width: 72px; height: 90px; }
+  .src { font-size: 24px; color: var(--dim); }
+
+  /* Needs */
+  .need-n { width: 112px; height: 140px; }
+
+  /* Story, HMW */
+  .story { font-size: 60px; font-weight: 500; line-height: 1.45; max-width: 1560px; }
+  .story mark { background: none; color: var(--route-text); font-weight: 700; }
+  .hmw { font-size: 84px; font-weight: 800; line-height: 1.2; max-width: 1560px; }
+  .hmw mark { background: none; color: var(--route-text); }
+
+  /* Existing solutions */
+  .sol { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; width: 1660px; }
+  .sol .card { background: var(--paper); border: 3px solid color-mix(in oklch, var(--ink) 14%, var(--paper)); border-radius: 36px; padding: 40px 32px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+  .sol h3 { margin: 0; font-size: 36px; font-weight: 700; }
+  .sol p { font-size: 26px; line-height: 1.4; }
+  .sol p b { font-weight: 700; }
+  .sol p.con { color: var(--dim); }
+
+  /* Non-tech */
+  .group { display: flex; flex-direction: column; align-items: center; gap: 24px; }
+  .group h3 { margin: 0; font-size: 34px; font-weight: 700; color: var(--route-text); }
+  .pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; max-width: 1500px; }
+  .pill { font-size: 32px; font-weight: 500; padding: 20px 40px; border-radius: 999px; background: var(--route-soft); }
+  .pill.ink { background: var(--ink); color: var(--paper); }
+
+  .thanks { font-size: 230px; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-cone" viewBox="0 0 48 48"><path d="M19 9h10l7 29H12z"/><path d="M16 22h16M14 30h20"/><path d="M7 38h34"/></symbol>
+  <symbol id="i-crane" viewBox="0 0 48 48"><path d="M12 42V8M8 12h34M12 8l6 4M34 12v12M30 24h8v6h-8z"/><path d="M22 42V32h18v10M6 42h38"/></symbol>
+  <symbol id="i-train" viewBox="0 0 48 48"><rect x="12" y="6" width="24" height="30" rx="6"/><path d="M12 18h24M18 30h.01M30 30h.01M16 44l4-8M32 44l-4-8"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 48 48"><path d="M24 44s-14-14-14-24a14 14 0 0 1 28 0c0 10-14 24-14 24z"/><circle cx="24" cy="20" r="5"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 48 48"><path d="M8 10h32v22H22l-9 8v-8H8z"/><path d="M16 21h.01M24 21h.01M32 21h.01"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 48 48"><path d="M4 24s7-13 20-13 20 13 20 13-7 13-20 13S4 24 4 24z"/><circle cx="24" cy="24" r="6"/></symbol>
+  <symbol id="i-split" viewBox="0 0 48 48"><path d="M24 42V26M24 26L10 10M24 26l14-16M10 10v8M10 10h8M38 10v8M38 10h-8"/></symbol>
+  <symbol id="i-inbox" viewBox="0 0 48 48"><path d="M8 30h10l2 5h8l2-5h10v12H8z"/><path d="M12 6l6 14M24 4v16M36 6l-6 14"/></symbol>
+  <symbol id="i-unlink" viewBox="0 0 48 48"><path d="M20 14l-3-3a8 8 0 0 0-11 11l5 5a8 8 0 0 0 9 1M28 34l3 3a8 8 0 0 0 11-11l-5-5a8 8 0 0 0-9-1"/><path d="M6 42l4-4M42 6l-4 4"/></symbol>
+  <symbol id="i-ask" viewBox="0 0 48 48"><circle cx="18" cy="14" r="6"/><path d="M6 42v-6a12 12 0 0 1 24 0v6"/><path d="M34 12a5 5 0 1 1 6 5c-1 .5-1 1.5-1 3M39 26h.01"/></symbol>
+  <symbol id="i-nav" viewBox="0 0 48 48"><path d="M24 4l16 38-16-9-16 9z"/></symbol>
+  <symbol id="i-map" viewBox="0 0 48 48"><path d="M4 10l13-5 14 5 13-5v33l-13 5-14-5-13 5z"/><path d="M17 5v33M31 10v33"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 48 48"><path d="M14 6l6 10-5 4a24 24 0 0 0 13 13l4-5 10 6-3 8C22 42 6 26 6 9z"/></symbol>
+  <symbol id="i-group" viewBox="0 0 48 48"><path d="M4 8h24v16H14l-6 6v-6H4z"/><path d="M32 18h12v16h-4v6l-6-6H20v-6"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 48 48"><path d="M40 24H8M20 12L8 24l12 12"/></symbol>
+</svg>
+
+<div class="deck-viewport"><div class="deck-stage">
+
+<!-- 1 · Cover -->
+<section class="slide cover">
+  <svg class="bg-svg" viewBox="0 0 1920 1080" aria-hidden="true">
+    <path d="M-20 960 L520 -20" stroke="oklch(26% 0.035 250 / .06)" stroke-width="26" fill="none"/>
+    <path class="draw" d="M140 900 H420 V760 H700 V900 H1220 V760 H1500 V900 H1780" fill="none" stroke="oklch(56% 0.12 215)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <g fill="oklch(56% 0.12 215)"><circle cx="140" cy="900" r="18"/><circle cx="1780" cy="900" r="18"/></g>
+    <g transform="translate(560 690)"><path d="M0 0c0 0-34-34-34-58a34 34 0 0 1 68 0c0 24-34 58-34 58z" fill="oklch(26% 0.035 250)"/><circle cx="0" cy="-58" r="12" fill="oklch(97% 0.012 95)"/></g>
+    <g transform="translate(1360 690)"><path d="M0 0c0 0-34-34-34-58a34 34 0 0 1 68 0c0 24-34 58-34 58z" fill="oklch(26% 0.035 250)"/><circle cx="0" cy="-58" r="12" fill="oklch(97% 0.012 95)"/></g>
+    <g transform="translate(960 900)"><rect x="-82" y="-30" width="164" height="60" rx="14" fill="oklch(26% 0.035 250)"/><path d="M-56 18l30-36M-10 18l30-36M36 18l30-36" stroke="oklch(97% 0.012 95)" stroke-width="10" stroke-linecap="round"/></g>
+    <g fill="none" stroke="oklch(56% 0.12 215 / .35)" stroke-width="4"><circle cx="1650" cy="230" r="70"/><circle cx="1650" cy="230" r="120"/><circle cx="270" cy="250" r="54"/></g>
+    <g fill="oklch(56% 0.12 215)"><circle cx="1650" cy="230" r="14"/><circle cx="270" cy="250" r="12"/></g>
+  </svg>
+  <h1 class="enter e-rise" style="margin-top:-120px">מצגת צרכים</h1>
+  <p class="domain enter e-rise" style="--d:1">הבית הזה, השטח העירוני</p>
+  <p class="meta enter e-rise" style="--d:2">קבוצה 2 · <span class="en">miLAB AI Co-Creation</span><br>אלדר ביכלר, נועה כץ, יהלי חן, גאיה שי, גבריאל גפן</p>
+  <aside class="notes">פתיחה: אנחנו קבוצה 2. הנושא שלנו השנה הוא שקיפות, והדומיין: תהליכים עירוניים, כמו עבודות בכביש, תמ״א ורכבת קלה.</aside>
+</section>
+
+<!-- 2 · Domain -->
+<section class="slide">
+  <h2 class="enter e-fade">הדומיין: תהליכים עירוניים</h2>
+  <p class="sub enter e-fade" style="--d:1">איך תושבים מוצאים, או לא מוצאים, מידע עירוני שמשפיע על היום-יום שלהם</p>
+  <div class="stops enter e-fade" style="--d:2">
+    <div class="stop"><span class="badge"><svg class="ic"><use href="#i-cone"/></svg></span><h3>עבודות וחסימות בכבישים</h3></div>
+    <div class="stop"><span class="badge"><svg class="ic"><use href="#i-crane"/></svg></span><h3>תמ״א 38 ובנייה</h3></div>
+    <div class="stop"><span class="badge"><svg class="ic"><use href="#i-train"/></svg></span><h3>רכבת קלה ותשתיות</h3></div>
+  </div>
+  <aside class="notes">התחלנו מנושא רחב יותר, שכלל גם גנים ובתי ספר, וצמצמנו לעבודות ולבנייה בעיר: מה שמשפיע על הדרך היומיומית של התושב.</aside>
+</section>
+
+<!-- 3 · Who we talked to -->
+<section class="slide" style="gap:64px">
+  <div class="counts enter e-slide">
+    <div class="count"><b>10</b><span>תושבים</span></div>
+    <div class="count"><b>2</b><span>מומחיות</span></div>
+    <div class="count"><b>6</b><span>ערים</span></div>
+  </div>
+  <div class="line enter e-slide" style="--d:1">
+    <div class="station"><i></i><h3>חיפה</h3><p>מלצרית</p></div>
+    <div class="station"><i></i><h3>רמת השרון</h3><p>מאמנת התעמלות</p></div>
+    <div class="station"><i></i><h3>תל אביב</h3><p>סטודנטית לתקשורת</p><p>עצמאית, אסטרטגיה ומיתוג</p><p>מעצבת פנים</p><p>עובדת בתעשייה</p><p>סטודנטית לפסיכולוגיה</p><p class="x">מומחית: מנהלת פרויקטים בעירייה</p></div>
+    <div class="station"><i></i><h3>רמת גן</h3><p class="x">מומחית: סגנית מנהלת אגף ההנדסה</p></div>
+    <div class="station"><i></i><h3>גבעתיים</h3><p>מאמן כושר</p></div>
+    <div class="station"><i></i><h3>ירושלים</h3><p>סטודנט לביולוגיה</p><p>משרת בצבא קבע</p></div>
+  </div>
+  <aside class="notes">עם מי דיברנו: עשרה תושבים ושתי מומחיות, בשש ערים. כל נקודה על המפה היא עיר, ולידה מי שגר או עובד בה. המומחיות מסומנות בכחול: מנהלת פרויקטים בעיריית תל אביב וסגנית מנהלת אגף ההנדסה ברמת גן.</aside>
+</section>
+
+<!-- 4 · Guy -->
+<section class="slide" style="gap:28px">
+  <img class="guy-img enter e-fade" src="assets/guy.png" alt="גיא הולך ברחוב ונתקע מול חסימה">
+  <h2 class="enter e-fade" style="--d:1">גיא, 28, תושב גוש דן</h2>
+  <p class="sub enter e-fade" style="--d:1">מתנייד כל יום בעיר שמשתנה סביבו</p>
+  <div class="journey enter e-fade" style="--d:2">
+    <div class="leg"><small>מה קורה סביבו</small><p>בנייה, תמ״א, רכבת קלה וחסימות</p></div>
+    <svg class="arrow ic"><use href="#i-arrow"/></svg>
+    <div class="leg block"><small>מה הוא חווה</small><p>מגלה רק כשזה כבר קורה, ואין לו למי לפנות</p></div>
+    <svg class="arrow ic"><use href="#i-arrow"/></svg>
+    <div class="leg"><small>מה הוא מרגיש</small><p>חוסר ודאות, ותחושה שהוא שקוף בעיני העירייה</p></div>
+  </div>
+  <aside class="notes">גיא הוא פרסונה שבנינו מתוך עשרת הראיונות. באיור הוא הולך ברחוב ונתקע מול חסימה שלא ידע עליה. קוראים מימין לשמאל: מה קורה סביבו, מה הוא חווה, ומה הוא מרגיש. מתחת לאיחורים ולעצבים יש משהו עמוק יותר.</aside>
+</section>
+
+<!-- 5 · Guy's traits -->
+<section class="slide" style="gap:80px">
+  <h2 class="enter e-rise">מה מאפיין את גיא</h2>
+  <div class="row enter e-rise" style="--d:1">
+    <div class="item"><span class="badge"><svg class="ic"><use href="#i-pin"/></svg></span><h3>מעניין אותו רק מה שקרוב אליו</h3></div>
+    <div class="item"><span class="badge"><svg class="ic"><use href="#i-chat"/></svg></span><h3>סומך על וואטסאפ ושמועות, לא על ערוצים רשמיים</h3></div>
+    <div class="item"><span class="badge"><svg class="ic"><use href="#i-eye"/></svg></span><h3>רוצה שיראו אותו, לא רק לקבל עוד מידע</h3></div>
+  </div>
+  <aside class="notes">שלושה מאפיינים: הוא ממוקד באזור שלו, הוא לא בערוצים הרשמיים, והוא רוצה קול, לא רק עדכונים.</aside>
+</section>
+
+<!-- 6 · Section: experts -->
+<section class="slide dark">
+  <svg class="enter e-zoom" width="300" height="200" viewBox="0 0 300 200" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M70 80 L150 36 L230 80 Z" stroke="oklch(97% 0.012 95)" stroke-width="6"/>
+    <path d="M90 92v70M120 92v70M150 92v70M180 92v70M210 92v70" stroke="oklch(97% 0.012 95)" stroke-width="6"/>
+    <path d="M60 176h180" stroke="oklch(97% 0.012 95)" stroke-width="6"/>
+    <path d="M150 36V14" stroke="oklch(70% 0.12 210)" stroke-width="6"/><path d="M150 14l18 6-18 6" fill="oklch(70% 0.12 210)" stroke="none"/>
+    <path d="M30 60 q-14 30 10 50 M270 60 q14 30 -10 50" stroke="oklch(70% 0.12 210)" stroke-width="5" stroke-dasharray="2 12"/>
+  </svg>
+  <h1 class="enter e-zoom" style="--d:1; font-size:150px">תובנות מהמומחים</h1>
+  <p class="sub en enter e-zoom" style="--d:2">Expert insights + quotes</p>
+  <aside class="notes">עברנו לצד השני: מה קורה בתוך העירייה.</aside>
+</section>
+
+<!-- 7 · Inside the municipality -->
+<section class="slide" style="gap:32px">
+  <h2 class="enter e-slide">בתוך העירייה, התהליכים לא מתואמים</h2>
+  <p class="sub enter e-slide" style="--d:1">ארבע בעיות שעלו בראיונות עם אנשי עירייה</p>
+  <div class="quad enter e-slide" style="--d:2; margin-top:24px">
+    <div class="cell"><span class="badge"><svg class="ic"><use href="#i-split"/></svg></span><div><h3>ביזור סמכויות</h3><p>כל יחידה עובדת בשיטות שלה, ולא ברור מי מוסמך להחליט</p></div></div>
+    <div class="cell"><span class="badge"><svg class="ic"><use href="#i-inbox"/></svg></span><div><h3>פניות ממוקדים שונים</h3><p>אותה פנייה מגיעה מכמה ערוצים, ולא ברור מי כבר ענה</p></div></div>
+    <div class="cell"><span class="badge"><svg class="ic"><use href="#i-unlink"/></svg></span><div><h3>חוסר תיאום</h3><p>יחידות לא יודעות זו על זו, ולפעמים יוזמות פרויקטים דומים</p></div></div>
+    <div class="cell"><span class="badge"><svg class="ic"><use href="#i-ask"/></svg></span><div><h3>לא ברור למי לפנות</h3><p>לא שקוף מי בעל התפקיד, ומי אחראי ליידע את הציבור</p></div></div>
+  </div>
+  <aside class="notes">הסיפור מבפנים: המידע לא מוסתר, אבל הוא הולך לאיבוד בין יחידות וערוצים. ארבע הבעיות האלה מסבירות למה התושב בסוף לא יודע מה קורה.</aside>
+</section>
+
+<!-- 8 · In their words -->
+<section class="slide" style="gap:64px">
+  <h2 class="enter e-fade">במילים שלהן</h2>
+  <div class="quotes enter e-fade" style="--d:1">
+    <div class="q"><p class="bubble xl">״בין יד ימין לרגל שמאל״</p><p class="ctx">כך תיארה את הקשר בין היחידות בעירייה: כל יחידה עובדת בשיטות שלה, והדרישות נופלות בדרך</p><p class="who">מנהלת פרויקטים, עיריית תל אביב</p></div>
+    <div class="q"><p class="bubble xl">״ה-SOS של האגף״</p><p class="ctx">כך הגדירה את עצמה: פניות שלא קיבלו מענה מגיעות אליה, והתיאום נשען עליה ולא על כלי מסודר</p><p class="who">סגנית מנהלת אגף ההנדסה, רמת גן</p></div>
+  </div>
+  <aside class="notes">שני הציטוטים, עם ההקשר: בתל אביב העיכובים נובעים מבעיית ממשקים מובנית בין היחידות. ברמת גן אדם אחד מחזיק את התיאום בין ערוצי הפניות. המסקנה המשותפת: המידע לא מוסתר, הוא נופל בדרך.</aside>
+</section>
+
+<!-- 9 · Section: user needs -->
+<section class="slide dark">
+  <svg class="enter e-zoom" width="300" height="200" viewBox="0 0 300 200" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="100" cy="96" r="18" stroke="oklch(97% 0.012 95)" stroke-width="6"/><path d="M68 176v-24a32 32 0 0 1 64 0v24" stroke="oklch(97% 0.012 95)" stroke-width="6"/>
+    <circle cx="200" cy="96" r="18" stroke="oklch(97% 0.012 95)" stroke-width="6"/><path d="M168 176v-24a32 32 0 0 1 64 0v24" stroke="oklch(97% 0.012 95)" stroke-width="6"/>
+    <rect x="44" y="18" width="92" height="44" rx="22" stroke="oklch(70% 0.12 210)" stroke-width="5"/><rect x="164" y="18" width="92" height="44" rx="22" stroke="oklch(70% 0.12 210)" stroke-width="5"/>
+    <g fill="oklch(70% 0.12 210)"><circle cx="190" cy="40" r="5"/><circle cx="210" cy="40" r="5"/><circle cx="230" cy="40" r="5"/></g><path d="M70 40h40" stroke="oklch(70% 0.12 210)" stroke-width="5"/>
+  </svg>
+  <h1 class="enter e-zoom" style="--d:1; font-size:150px">צרכי המשתמש</h1>
+  <p class="sub en enter e-zoom" style="--d:2">User needs + quotes</p>
+  <aside class="notes">ועכשיו לתושבים: מה הם צריכים, במילים שלהם.</aside>
+</section>
+
+<!-- 10 · 8 of 10 -->
+<section class="slide" style="gap:36px">
+  <div class="big enter e-zoom">8 <small>מתוך 10</small></div>
+  <h2 class="enter e-zoom" style="--d:1; font-size:56px; font-weight:700">תושבים מגלים על עבודות וחסימות רק כשהם כבר נתקעים בהן</h2>
+  <div class="pins enter e-zoom" style="--d:2" role="img" aria-label="8 מתוך 10 תושבים">
+    <svg class="pin" viewBox="0 0 48 60"><path d="M24 58C24 58 4 36 4 22a20 20 0 0 1 40 0c0 14-20 36-20 36z" fill="oklch(56% 0.12 215)"/><circle cx="24" cy="22" r="7" fill="oklch(97% 0.012 95)"/></svg>
+    <svg class="pin" viewBox="0 0 48 60"><path d="M24 58C24 58 4 36 4 22a20 20 0 0 1 40 0c0 14-20 36-20 36z" fill="oklch(56% 0.12 215)"/><circle cx="24" cy="22" r="7" fill="oklch(97% 0.012 95)"/></svg>
+    <svg class="pin" viewBox="0 0 48 60"><path d="M24 58C24 58 4 36 4 22a20 20 0 0 1 40 0c0 14-20 36-20 36z" fill="oklch(56% 0.12 215)"/><circle cx="24" cy="22" r="7" fill="oklch(97% 0.012 95)"/></svg>
+    <svg class="pin" viewBox="0 0 48 60"><path d="M24 58C24 58 4 36 4 22a20 20 0 0 1 40 0c0 14-20 36-20 36z" fill="oklch(56% 0.12 215)"/><circle cx="24" cy="22" r="7" fill="oklch(97% 0.012 95)"/></svg>
+    <svg class="pin" viewBox="0 0 48 60"><path d="M24 58C24 58 4 36 4 22a20 20 0 0 1 40 0c0 14-20 36-20 36z" fill="oklch(56% 0.12 215)"/><circle cx="24" cy="22" r="7" fill="oklch(97% 0.012 95)"/></svg>
+    <svg class="pin" viewBox="0 0 48 60"><path d="M24 58C24 58 4 36 4 22a20 20 0 0 1 40 0c0 14-20 36-20 36z" fill="oklch(56% 0.12 215)"/><circle cx="24" cy="22" r="7" fill="oklch(97% 0.012 95)"/></svg>
+    <svg class="pin" viewBox="0 0 48 60"><path d="M24 58C24 58 4 36 4 22a20 20 0 0 1 40 0c0 14-20 36-20 36z" fill="oklch(56% 0.12 215)"/><circle cx="24" cy="22" r="7" fill="oklch(97% 0.012 95)"/></svg>
+    <svg class="pin" viewBox="0 0 48 60"><path d="M24 58C24 58 4 36 4 22a20 20 0 0 1 40 0c0 14-20 36-20 36z" fill="oklch(56% 0.12 215)"/><circle cx="24" cy="22" r="7" fill="oklch(97% 0.012 95)"/></svg>
+    <svg class="pin" viewBox="0 0 48 60"><path d="M24 58C24 58 4 36 4 22a20 20 0 0 1 40 0c0 14-20 36-20 36z" fill="none" stroke="oklch(26% 0.035 250 / .3)" stroke-width="4"/><circle cx="24" cy="22" r="7" fill="oklch(26% 0.035 250 / .3)"/></svg>
+    <svg class="pin" viewBox="0 0 48 60"><path d="M24 58C24 58 4 36 4 22a20 20 0 0 1 40 0c0 14-20 36-20 36z" fill="none" stroke="oklch(26% 0.035 250 / .3)" stroke-width="4"/><circle cx="24" cy="22" r="7" fill="oklch(26% 0.035 250 / .3)"/></svg>
+  </div>
+  <div class="q enter e-zoom" style="--d:3; max-width:1100px; margin-top:20px; gap:28px"><p class="bubble" style="font-size:40px">״לרוב אני מגלה את המפגע רק שאני מגיעה למקום.״</p><p class="who">סטודנטית, תל אביב</p></div>
+  <aside class="notes">הממצא שחזר הכי הרבה. הבעיה היא לא העבודות עצמן, אלא שהתושבים מגלים עליהן בשטח, כשכבר מאוחר מדי לתכנן. משם עולים שלושה צרכים.</aside>
+</section>
+
+<!-- 11 · Need 1 -->
+<section class="slide" style="gap:28px">
+  <svg class="need-n enter e-rise" viewBox="0 0 48 60" role="img" aria-label="1"><path d="M24 58C24 58 4 36 4 22a20 20 0 0 1 40 0c0 14-20 36-20 36z" fill="oklch(56% 0.12 215)"/><text x="24" y="30" text-anchor="middle" font-family="Rubik" font-weight="800" font-size="22" fill="oklch(97% 0.012 95)">1</text></svg>
+  <h2 class="enter e-rise" style="--d:1">ודאות</h2>
+  <p class="sub enter e-rise" style="--d:1">לדעת מה קורה ומה מתוכנן באזור שלו, ועד מתי</p>
+  <div class="quotes enter e-rise" style="--d:2; margin-top:36px">
+    <div class="q"><p class="bubble">״אין לי עדכון מראש... אין לי מושג, אין לי מושג.״</p><p class="who">תושבת תל אביב, 35 שנה בעיר</p></div>
+    <div class="q"><p class="bubble light en">“I have no idea when things are happening, and I wouldn’t even know where that exists.”</p><p class="who">תושבת תל אביב, דוברת אנגלית</p></div>
+  </div>
+  <aside class="notes">הצורך הראשון בעדיפות: ודאות. לא שהעבודות ייעלמו, אלא לדעת מראש מה יקרה, איפה ולכמה זמן.</aside>
+</section>
+
+<!-- 12 · Need 2 -->
+<section class="slide" style="gap:28px">
+  <svg class="need-n enter e-rise" viewBox="0 0 48 60" role="img" aria-label="2"><path d="M24 58C24 58 4 36 4 22a20 20 0 0 1 40 0c0 14-20 36-20 36z" fill="oklch(56% 0.12 215)"/><text x="24" y="30" text-anchor="middle" font-family="Rubik" font-weight="800" font-size="22" fill="oklch(97% 0.012 95)">2</text></svg>
+  <h2 class="enter e-rise" style="--d:1">להרגיש שרואים אותו</h2>
+  <p class="sub enter e-rise" style="--d:1">שיש מי שמקשיב לו, ושהקול שלו לא נעלם בדרך</p>
+  <div class="quotes enter e-rise" style="--d:2; margin-top:36px">
+    <div class="q"><p class="bubble">״שיש מישהו שרואה אותי, שהעירייה רואה אותי... שיש איזשהו הקשבה כזה.״</p><p class="who">סטודנטית, תל אביב</p></div>
+    <div class="q"><p class="bubble light">״תמיד יש איזו דרך שבה המסר או הרצון של אותו תושב לא עובר, או נעלם בדרך.״</p><p class="who">תושב גבעתיים</p></div>
+  </div>
+  <aside class="notes">הצורך השני הוא רגשי. כשאין עדכון וכשפנייה ל-106 לא חוזרת, התושבים מרגישים שהעירייה לא רואה אותם. מוקד 106 הוא הערוץ היחיד שלהם, והוא עובד בכיוון אחד.</aside>
+</section>
+
+<!-- 13 · Need 3 -->
+<section class="slide" style="gap:28px">
+  <svg class="need-n enter e-rise" viewBox="0 0 48 60" role="img" aria-label="3"><path d="M24 58C24 58 4 36 4 22a20 20 0 0 1 40 0c0 14-20 36-20 36z" fill="oklch(56% 0.12 215)"/><text x="24" y="30" text-anchor="middle" font-family="Rubik" font-weight="800" font-size="22" fill="oklch(97% 0.012 95)">3</text></svg>
+  <h2 class="enter e-rise" style="--d:1">מידע ממוקד ופרסונלי</h2>
+  <p class="sub enter e-rise" style="--d:1">רק מה שנוגע לכתובת ולמסלול שלו, בלי הצפה</p>
+  <div class="quotes enter e-rise" style="--d:2; margin-top:36px">
+    <div class="q"><p class="bubble" style="font-size:38px">״ברגע שיש משהו שיכול להיות רלוונטי לגבי המיקום שלי... הייתי שמחה אם הייתי מקבלת על זה איזושהי הודעה.״</p><p class="who">סטודנטית, תל אביב</p></div>
+    <div class="q"><p class="bubble light en">“I don’t care about the cause. I just care about getting from point A to point B.”</p><p class="who">תושבת תל אביב, דוברת אנגלית</p></div>
+  </div>
+  <aside class="notes">הסייג: יותר מידע זה לא הפתרון. סטודנט מירושלים העדיף לא לקבל עדכונים בכלל, כדי לא לקבל הודעות סתמיות. הם רוצים מידע פרקטי שקשור אליהם.</aside>
+</section>
+
+<!-- 14 · User story -->
+<section class="slide" style="gap:72px">
+  <h2 class="enter e-fade" style="font-size:64px; color:var(--dim)">סיפור המשתמש</h2>
+  <p class="story enter e-fade" style="--d:1">״כתושב גוש דן שמתנייד כל יום בעיר שמשתנה סביבו, <mark>אני רוצה לדעת מראש מה משתנה במסלול ובאזור שלי</mark>, כדי שאוכל לתכנן את היום ולהרגיש שהעירייה רואה אותי.״</p>
+  <aside class="notes">סיפור המשתמש מחבר את שלושת הצרכים למשפט אחד: מי הוא, מה הוא רוצה, ולמה זה חשוב לו.</aside>
+</section>
+
+<!-- 15 · HMW -->
+<section class="slide dark" style="gap:56px">
+  <p class="hmw en enter e-wipe">How might we help Gush Dan residents feel <mark>seen</mark> and <mark>certain</mark> while their city is changing around them?</p>
+  <p class="sub enter e-wipe" style="--d:1; font-size:42px; max-width:1500px">איך נוכל לעזור לתושבי גוש דן להרגיש שרואים אותם ושיש להם ודאות, בזמן שהעיר משתנה סביבם?</p>
+  <aside class="notes">זו השאלה שנענה עליה ביהלום הבא. seen מתחבר לצורך השני, certain לצורך הראשון, והמיקוד בעיר שמשתנה סביבם שומר על הרלוונטיות.</aside>
+</section>
+
+<!-- 16 · Tech solutions -->
+<section class="slide" style="gap:64px">
+  <h2 class="enter e-slide">פתרונות קיימים: טכנולוגיים</h2>
+  <div class="sol enter e-slide" style="--d:1">
+    <div class="card"><span class="badge"><svg class="ic"><use href="#i-nav"/></svg></span><h3>Waze</h3><p><b>יתרון:</b> מתריע על חסימות בדרך</p><p class="con"><b>חיסרון:</b> רק בזמן אמת, ולא תמיד</p></div>
+    <div class="card"><span class="badge"><svg class="ic"><use href="#i-map"/></svg></span><h3>אתר העירייה ומפת GIS</h3><p><b>יתרון:</b> כל העבודות על מפה אחת</p><p class="con"><b>חיסרון:</b> צריך לדעת שהיא קיימת ולחפש</p></div>
+    <div class="card"><span class="badge"><svg class="ic"><use href="#i-phone"/></svg></span><h3>מוקד 106</h3><p><b>יתרון:</b> כתובת לדיווח</p><p class="con"><b>חיסרון:</b> כיוון אחד, אף אחד לא חוזר</p></div>
+    <div class="card"><span class="badge"><svg class="ic"><use href="#i-group"/></svg></span><h3>קבוצות וואטסאפ ופייסבוק</h3><p><b>יתרון:</b> מהירות וקרובות לשטח</p><p class="con"><b>חיסרון:</b> לא מעודכנות, רק האזור הקרוב</p></div>
+  </div>
+  <aside class="notes">כל הכלים מתחלקים לשניים: כאלה שמגיבים בזמן אמת, כמו Waze, וכאלה שמחייבים לחפש בעצמך, כמו מפת ה-GIS. גם מיילים מספקי חשמל ומים מגיעים, אבל לא באופן קבוע.</aside>
+</section>
+
+<!-- 17 · Non-tech solutions -->
+<section class="slide" style="gap:64px">
+  <h2 class="enter e-rise">פתרונות לא טכנולוגיים</h2>
+  <div class="group enter e-rise" style="--d:1">
+    <h3>מה הם עושים</h3>
+    <div class="pills"><span class="pill">יוצאים מוקדם ״ליתר ביטחון״</span><span class="pill">עוקפים אזורי בנייה</span><span class="pill">שואלים שכנים, אמא או שותף</span><span class="pill">מדווחים ל-106 בעצמם</span></div>
+  </div>
+  <div class="group enter e-rise" style="--d:2">
+    <h3>מה הם מקבלים כנורמלי</h3>
+    <div class="pills"><span class="pill ink">לגלות על חסימה רק בשטח</span><span class="pill ink">לסמוך על וואטסאפ ושמועות</span><span class="pill ink">לא לקבל תשובה מהעירייה</span></div>
+  </div>
+  <aside class="notes">התושבים כבר מתמודדים לבד, והם התרגלו לקבל את המחיר כנורמלי. אף אחד מהפתרונות, טכנולוגי או לא, לא מגיע אליהם מראש.</aside>
+</section>
+
+<!-- 18 · Thanks -->
+<section class="slide">
+  <svg class="bg-svg" viewBox="0 0 1920 1080" aria-hidden="true">
+    <path d="M140 860 H600 V760 H1320 V860 H1700" fill="none" stroke="oklch(56% 0.12 215)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="140" cy="860" r="18" fill="oklch(56% 0.12 215)"/>
+    <g transform="translate(1700 860)"><path d="M0 0c0 0-34-34-34-58a34 34 0 0 1 68 0c0 24-34 58-34 58z" fill="oklch(26% 0.035 250)"/><circle cx="0" cy="-58" r="12" fill="oklch(97% 0.012 95)"/></g>
+  </svg>
+  <h1 class="thanks enter e-zoom" style="margin-top:-140px">תודה רבה :)</h1>
+  <aside class="notes">תודה. מעכשיו אנחנו עוברים ליהלום השני: מחפשים פתרון לשאלת ה-HMW.</aside>
+</section>
+
+</div></div>
+<div class="notes-panel" aria-live="polite"></div><div class="deck-count"></div>
+<script src="../_engine.js"></script>
+</body>
+</html>
