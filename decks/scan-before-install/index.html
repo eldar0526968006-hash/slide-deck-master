@@ -45,7 +45,7 @@
   .term { background: var(--raise); border-radius: var(--r); overflow: hidden; box-shadow: 0 40px 80px -30px oklch(0% 0 0 / .6); direction: ltr; text-align: left; }
   .term-bar { display: flex; gap: 10px; align-items: center; padding: 20px 26px; border-bottom: 1px solid var(--line); }
   .term-bar i { width: 13px; height: 13px; border-radius: 50%; background: var(--line); }
-  .term-bar span { margin-left: 14px; font: 500 20px var(--mono); color: var(--dim); }
+  .term-bar span { margin-left: 14px; font: 500 24px var(--mono); color: var(--dim); }
   .term pre { margin: 0; padding: 34px 38px; font: 400 27px/1.65 var(--mono); color: var(--paper); white-space: pre-wrap; }
   .term .p { color: var(--dim); } .term .hl { color: var(--signal); } .term .ok { color: var(--paper); font-weight: 600; }
   .term mark { background: color-mix(in oklch, var(--signal) 26%, transparent); color: var(--paper); border-radius: 6px; padding: 0 6px; }
@@ -53,9 +53,9 @@
 
   /* Dot field: 9 skills */
   .dots { display: grid; grid-template-columns: repeat(9, 1fr); gap: 28px; direction: ltr; }
-  .dot { aspect-ratio: 1; border-radius: 50%; border: 3px solid var(--line); display: grid; place-items: center; font: 600 22px var(--mono); color: var(--dim); }
+  .dot { aspect-ratio: 1; border-radius: 50%; border: 3px solid var(--line); display: grid; place-items: center; font: 600 26px var(--mono); color: var(--dim); }
   .dot.flag { background: var(--signal); border-color: var(--signal); color: var(--ground); }
-  .dot-key { display: grid; grid-template-columns: repeat(9, 1fr); gap: 28px; direction: ltr; font: 400 19px var(--mono); color: var(--dim); text-align: center; margin-top: -16px; }
+  .dot-key { display: grid; grid-template-columns: repeat(9, 1fr); gap: 28px; direction: ltr; font: 400 24px/1.25 var(--mono); color: var(--dim); text-align: center; margin-top: -16px; }
 
   /* Bento: varied rectangles, one hero cell */
   .bento { display: grid; gap: 24px; height: 600px; }
@@ -65,7 +65,7 @@
   .cell.hero { background: var(--signal); border-color: var(--signal); color: var(--ground); }
   .cell.hero h3 { font-size: 72px; font-weight: 900; }
   .cell.hero p { color: color-mix(in oklch, var(--ground) 78%, var(--signal)); font-size: 32px; }
-  .tag { font: 600 22px var(--mono); letter-spacing: .08em; direction: ltr; text-align: right; }
+  .tag { font: 600 24px var(--mono); letter-spacing: .08em; direction: ltr; text-align: right; }
   .b-rules { grid-template-columns: 1.55fr 1fr; grid-template-rows: 1fr 1fr; }
   .b-rules .hero { grid-row: span 2; justify-content: flex-end; }
 
@@ -78,11 +78,11 @@
   .gate p { font-size: 28px; line-height: 1.5; color: var(--dim); }
 
   /* Lockfile bento */
-  .b-lock { grid-template-columns: repeat(4, 1fr); grid-template-rows: 1fr 1fr; height: 560px; }
-  .b-lock .hero { grid-column: span 2; grid-row: span 2; justify-content: space-between; }
+  .b-lock { grid-template-columns: 1.5fr 1fr; grid-template-rows: repeat(3, 1fr); height: 600px; }
+  .b-lock .hero { grid-row: span 3; justify-content: space-between; }
   .b-lock .cell { padding: 32px 36px; gap: 8px; justify-content: flex-end; }
   .b-lock .cell b { font-size: 30px; font-weight: 800; }
-  .b-lock .cell .mono { font-size: 22px; color: var(--dim); text-align: right; }
+  .b-lock .cell .mono { font-size: 26px; color: var(--dim); text-align: right; }
   .b-lock .hero .k { font: 900 220px/0.9 var(--sans); letter-spacing: -0.04em; }
 
   /* Close */
@@ -222,10 +222,9 @@
       <div class="cell"><b>TASTE</b><span class="mono">f6b7657</span></div>
       <div class="cell"><b>Stageshow</b><span class="mono">299140f</span></div>
       <div class="cell"><b>Impeccable</b><span class="mono">d41d986</span></div>
-      <div class="cell"><b>Astryx</b><span class="mono">0.7.16</span></div>
     </div>
   </div>
-  <aside class="notes">בנוסף לארבעה שעל המסך: Frontend Slides 9906a34, Slideshow efc91fc, Make Interfaces Feel Better 1a2aa96, motion-prompt 683ecca, Plannotator 842ccce3. הרשימה המלאה ב-SECURITY-SCANS.md.</aside>
+  <aside class="notes">בנוסף לשלושה שעל המסך: Astryx 0.7.16, Frontend Slides 9906a34, Slideshow efc91fc, Make Interfaces Feel Better 1a2aa96, motion-prompt 683ecca, Plannotator 842ccce3. הרשימה המלאה ב-SECURITY-SCANS.md.</aside>
 </section>
 
 <!-- 9 · Honest gap -->
