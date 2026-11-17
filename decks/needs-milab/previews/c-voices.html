@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מצגת צרכים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;900&family=Assistant:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_base.css">
+<style>
+  :root {
+    --cream: oklch(95.5% 0.02 75);
+    --ink:   oklch(21% 0.02 35);
+    --coral: oklch(55% 0.17 38);
+    --dim: color-mix(in oklch, var(--ink) 58%, var(--cream));
+    --stage-bg: var(--cream); --slide-bg: var(--cream);
+  }
+  .slide { font-family: 'Assistant', sans-serif; color: var(--ink); box-sizing: border-box; padding: 112px 144px; }
+  .serif { font-family: 'Frank Ruhl Libre', serif; }
+  h1, h2 { margin: 0; font-family: 'Frank Ruhl Libre', serif; font-weight: 900; line-height: 1.05; }
+  p { margin: 0; }
+
+  .cover { display: grid; grid-template-rows: auto 1fr auto; height: 100%; }
+  .cover .kick { font-size: 30px; font-weight: 600; color: var(--dim); }
+  .cover blockquote { margin: 0; align-self: center; font-family: 'Frank Ruhl Libre', serif; font-weight: 500; font-size: 92px; line-height: 1.2; max-width: 1500px; }
+  .cover blockquote .q { color: var(--coral); }
+  .cover .foot { display: flex; justify-content: space-between; align-items: end; border-top: 3px solid var(--ink); padding-top: 32px; }
+  .cover h1 { font-size: 120px; }
+  .cover .meta { font-size: 26px; color: var(--dim); text-align: left; line-height: 1.5; }
+
+  .s8 { background: var(--ink); color: var(--cream); --dim: color-mix(in oklch, var(--cream) 62%, var(--ink)); }
+  .s8 .wrap { display: grid; grid-template-columns: 820px 1fr; gap: 112px; height: 100%; align-items: center; }
+  .s8 .big { font-family: 'Frank Ruhl Libre', serif; font-weight: 900; font-size: 520px; line-height: .8; color: oklch(72% 0.15 40); text-align: center; }
+  .s8 .of { font-size: 56px; font-weight: 800; text-align: center; margin-top: 24px; }
+  .s8 h2 { font-size: 72px; line-height: 1.15; }
+  .s8 .quote { margin-top: 56px; font-family: 'Frank Ruhl Libre', serif; font-size: 44px; font-weight: 500; line-height: 1.4; border-inline-start: 6px solid oklch(72% 0.15 40); padding-inline-start: 36px; }
+  .who { font-size: 26px; color: var(--dim); margin-top: 18px; padding-inline-start: 42px; }
+  .src { font-size: 24px; color: var(--dim); margin-top: 48px; }
+</style>
+</head>
+<body>
+<div class="deck-viewport"><div class="deck-stage">
+
+<section class="slide">
+  <div class="cover">
+    <p class="kick enter e-fade">דומיין: תהליכים עירוניים</p>
+    <blockquote class="enter e-fade" style="--d:1"><span class="q">״</span>שיש מישהו שרואה אותי, שהעירייה רואה אותי.<span class="q">״</span></blockquote>
+    <div class="foot enter e-fade" style="--d:2">
+      <h1>מצגת צרכים</h1>
+      <p class="meta">קבוצה 2 · miLAB AI Co-Creation<br>אלדר ביכלר, נועה כץ, יהלי חן, גאיה שי, גבריאל גפן</p>
+    </div>
+  </div>
+  <aside class="notes">פתיחה עם ציטוט אמיתי מהראיונות (סטודנטית, תל אביב), ואז: אנחנו קבוצה 2, הדומיין תהליכים עירוניים.</aside>
+</section>
+
+<section class="slide s8">
+  <div class="wrap">
+    <div class="enter e-wipe">
+      <div class="big">8</div>
+      <p class="of">מתוך 10 תושבים</p>
+    </div>
+    <div class="enter e-wipe" style="--d:1">
+      <h2>מגלים על עבודות וחסימות רק כשהם כבר נתקעים בהן.</h2>
+      <p class="quote">״לרוב אני מגלה את המפגע רק שאני מגיעה למקום.״</p>
+      <p class="who">סטודנטית, תל אביב</p>
+      <p class="src">מתוך 10 ראיונות עם תושבים</p>
+    </div>
+  </div>
+  <aside class="notes">הממצא שחזר הכי הרבה.</aside>
+</section>
+
+</div></div>
+<div class="notes-panel"></div><div class="deck-count"></div>
+<script src="../../_engine.js"></script>
+</body>
+</html>

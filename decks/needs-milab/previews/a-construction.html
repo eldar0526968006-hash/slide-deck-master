@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מצגת צרכים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_base.css">
+<style>
+  :root {
+    --asphalt: oklch(21% 0.012 260);
+    --sign:    oklch(86% 0.17 92);
+    --paper:   oklch(97% 0.006 90);
+    --dim: color-mix(in oklch, var(--paper) 62%, var(--asphalt));
+    --stage-bg: var(--asphalt); --slide-bg: var(--asphalt);
+  }
+  .slide { font-family: 'Heebo', sans-serif; color: var(--paper); box-sizing: border-box; padding: 120px 136px; }
+  h1, h2 { margin: 0; font-weight: 900; letter-spacing: -0.02em; line-height: 1; }
+  p { margin: 0; }
+  .stripe { position: absolute; inset-inline: -40px; height: 96px; background: repeating-linear-gradient(-45deg, var(--sign) 0 48px, var(--asphalt) 48px 96px); }
+
+  .cover { display: grid; grid-template-columns: 1fr 720px; align-items: center; gap: 48px; height: 760px; }
+  .cover h1 { font-size: 180px; }
+  .cover .domain { font-size: 48px; font-weight: 800; color: var(--sign); margin-top: 32px; }
+  .cover .meta { font-size: 26px; color: var(--dim); margin-top: 48px; line-height: 1.5; }
+  .cover img { width: 720px; filter: drop-shadow(0 40px 60px oklch(0% 0 0 / .5)); }
+
+  .s8 { background: var(--sign); color: var(--asphalt); }
+  .s8 .grid { display: grid; grid-template-columns: 1fr 760px; gap: 96px; height: 100%; align-items: center; }
+  .s8 .big { font-size: 260px; font-weight: 900; line-height: .85; letter-spacing: -0.04em; }
+  .s8 .big small { font-size: 120px; }
+  .s8 h2 { font-size: 64px; font-weight: 800; line-height: 1.15; margin-top: 40px; }
+  .people { display: grid; grid-template-columns: repeat(5, 1fr); gap: 36px 28px; }
+  .p { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .p i { width: 44px; height: 44px; border-radius: 50%; background: var(--asphalt); }
+  .p b { width: 84px; height: 120px; border-radius: 42px 42px 14px 14px; background: var(--asphalt); }
+  .p.out i, .p.out b { background: transparent; box-shadow: inset 0 0 0 5px var(--asphalt); }
+  .plate { margin-top: 64px; background: var(--asphalt); color: var(--sign); border-radius: 24px; padding: 36px 44px; font-size: 36px; font-weight: 800; line-height: 1.35; }
+  .who { font-size: 26px; margin-top: 16px; font-weight: 500; }
+  .src { position: absolute; top: 64px; left: 136px; font-size: 24px; font-weight: 500; }
+</style>
+</head>
+<body>
+<div class="deck-viewport"><div class="deck-stage">
+
+<section class="slide">
+  <div class="cover">
+    <div class="enter e-rise">
+      <h1>מצגת צרכים</h1>
+      <p class="domain">דומיין: תהליכים עירוניים</p>
+      <p class="meta">קבוצה 2 · miLAB AI Co-Creation<br>אלדר ביכלר, נועה כץ, יהלי חן, גאיה שי, גבריאל גפן</p>
+    </div>
+    <img class="enter e-zoom" style="--d:1" src="../assets/city.png" alt="עיר איזומטרית עם עגורן ובניינים בבנייה">
+  </div>
+  <div class="stripe enter e-wipe" style="--d:3; bottom:96px; transform: rotate(-1.5deg)"></div>
+  <aside class="notes">פתיחה: אנחנו קבוצה 2. הנושא שלנו השנה הוא שקיפות, והדומיין: תהליכים עירוניים.</aside>
+</section>
+
+<section class="slide s8">
+  <p class="src">מתוך 10 ראיונות עם תושבים</p>
+  <div class="grid">
+    <div class="enter e-rise">
+      <div class="big">8 <small>מתוך 10</small></div>
+      <h2>מגלים על עבודות וחסימות רק כשהם כבר נתקעים בהן.</h2>
+    </div>
+    <div class="enter e-rise" style="--d:1">
+      <div class="people" role="img" aria-label="8 מתוך 10 תושבים">
+        <div class="p"><i></i><b></b></div><div class="p"><i></i><b></b></div><div class="p"><i></i><b></b></div><div class="p"><i></i><b></b></div><div class="p"><i></i><b></b></div>
+        <div class="p"><i></i><b></b></div><div class="p"><i></i><b></b></div><div class="p"><i></i><b></b></div><div class="p out"><i></i><b></b></div><div class="p out"><i></i><b></b></div>
+      </div>
+      <p class="plate">״לרוב אני מגלה את המפגע רק שאני מגיעה למקום.״</p>
+      <p class="who">סטודנטית, תל אביב</p>
+    </div>
+  </div>
+  <aside class="notes">הממצא שחזר הכי הרבה.</aside>
+</section>
+
+</div></div>
+<div class="notes-panel"></div><div class="deck-count"></div>
+<script src="../../_engine.js"></script>
+</body>
+</html>

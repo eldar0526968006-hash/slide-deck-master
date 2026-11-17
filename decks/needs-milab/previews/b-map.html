@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מצגת צרכים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_base.css">
+<style>
+  :root {
+    --paper: oklch(97% 0.012 95);
+    --ink:   oklch(26% 0.035 250);
+    --route: oklch(56% 0.12 215);
+    --dim: color-mix(in oklch, var(--ink) 60%, var(--paper));
+    --street: color-mix(in oklch, var(--ink) 9%, var(--paper));
+    --stage-bg: var(--paper); --slide-bg: var(--paper);
+  }
+  .slide { font-family: 'Rubik', sans-serif; color: var(--ink); box-sizing: border-box; padding: 120px 136px; }
+  h1, h2 { margin: 0; font-weight: 800; letter-spacing: -0.015em; line-height: 1.05; }
+  p { margin: 0; }
+  .streets { position: absolute; inset: 0; width: 1920px; height: 1080px; max-width: none; max-height: none; }
+
+  .cover .text { position: relative; width: 860px; margin-top: 150px; }
+  .cover h1 { font-size: 168px; }
+  .cover .domain { font-size: 48px; font-weight: 500; color: var(--route); margin-top: 28px; }
+  .cover .meta { font-size: 26px; color: var(--dim); margin-top: 56px; line-height: 1.5; }
+
+  .s8 .wrap { position: relative; display: grid; grid-template-columns: 1fr 820px; gap: 96px; height: 100%; align-items: center; }
+  .s8 .big { font-size: 240px; font-weight: 800; line-height: .85; color: var(--route); letter-spacing: -0.03em; }
+  .s8 .big small { font-size: 104px; color: var(--ink); }
+  .s8 h2 { font-size: 60px; font-weight: 700; line-height: 1.2; margin-top: 40px; }
+  .src { font-size: 24px; color: var(--dim); margin-top: 32px; }
+  .pins { display: grid; grid-template-columns: repeat(5, 1fr); gap: 40px 24px; justify-items: center; }
+  .pin { width: 96px; height: 120px; }
+  .callout { position: relative; margin-top: 72px; background: var(--ink); color: var(--paper); border-radius: 28px; padding: 36px 44px; font-size: 36px; font-weight: 500; line-height: 1.4; }
+  .callout::after { content: ''; position: absolute; top: -18px; right: 88px; width: 36px; height: 36px; background: var(--ink); transform: rotate(45deg); border-radius: 6px; }
+  .who { font-size: 26px; color: var(--dim); margin-top: 18px; }
+</style>
+</head>
+<body>
+<div class="deck-viewport"><div class="deck-stage">
+
+<section class="slide cover">
+  <svg class="streets enter e-fade" viewBox="0 0 1920 1080" aria-hidden="true">
+    <g stroke="oklch(26% 0.035 250 / .09)" stroke-width="14" fill="none" stroke-linecap="round">
+      <path d="M-20 260 H1940"/><path d="M-20 560 H1940"/><path d="M-20 860 H1940"/>
+      <path d="M180 -20 V1100"/><path d="M520 -20 V1100"/><path d="M1080 -20 V1100"/><path d="M1500 -20 V1100"/><path d="M1780 -20 V1100"/>
+      <path d="M-20 1000 L760 -20" stroke-width="24"/>
+    </g>
+    <path d="M1500 980 V860 H1080 V560 H520 V400" fill="none" stroke="oklch(56% 0.12 215)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 0"/>
+    <circle cx="1500" cy="980" r="20" fill="oklch(56% 0.12 215)"/>
+    <g transform="translate(520 330)"><rect x="-70" y="-26" width="140" height="52" rx="12" fill="oklch(26% 0.035 250)"/><path d="M-50 18 L-20 -18 M-10 18 L20 -18 M30 18 L60 -18" stroke="oklch(97% 0.012 95)" stroke-width="10" stroke-linecap="round"/></g>
+  </svg>
+  <div class="text enter e-rise" style="--d:1">
+    <h1>מצגת צרכים</h1>
+    <p class="domain">דומיין: תהליכים עירוניים</p>
+    <p class="meta">קבוצה 2 · miLAB AI Co-Creation<br>אלדר ביכלר, נועה כץ, יהלי חן, גאיה שי, גבריאל גפן</p>
+  </div>
+  <aside class="notes">פתיחה: אנחנו קבוצה 2. הנושא שלנו השנה הוא שקיפות, והדומיין: תהליכים עירוניים.</aside>
+</section>
+
+<section class="slide s8">
+  <div class="wrap">
+    <div class="enter e-zoom">
+      <div class="big">8 <small>מתוך 10</small></div>
+      <h2>תושבים מגלים על עבודות וחסימות רק כשהם כבר נתקעים בהן.</h2>
+      <p class="src">מתוך 10 ראיונות עם תושבים</p>
+    </div>
+    <div class="enter e-zoom" style="--d:1">
+      <div class="pins" role="img" aria-label="8 מתוך 10 תושבים">
+        <svg class="pin" viewBox="0 0 48 60"><path d="M24 58C24 58 4 36 4 22a20 20 0 0 1 40 0c0 14-20 36-20 36z" fill="oklch(56% 0.12 215)"/><circle cx="24" cy="22" r="7" fill="oklch(97% 0.012 95)"/></svg>
+        <svg class="pin" viewBox="0 0 48 60"><path d="M24 58C24 58 4 36 4 22a20 20 0 0 1 40 0c0 14-20 36-20 36z" fill="oklch(56% 0.12 215)"/><circle cx="24" cy="22" r="7" fill="oklch(97% 0.012 95)"/></svg>
+        <svg class="pin" viewBox="0 0 48 60"><path d="M24 58C24 58 4 36 4 22a20 20 0 0 1 40 0c0 14-20 36-20 36z" fill="oklch(56% 0.12 215)"/><circle cx="24" cy="22" r="7" fill="oklch(97% 0.012 95)"/></svg>
+        <svg class="pin" viewBox="0 0 48 60"><path d="M24 58C24 58 4 36 4 22a20 20 0 0 1 40 0c0 14-20 36-20 36z" fill="oklch(56% 0.12 215)"/><circle cx="24" cy="22" r="7" fill="oklch(97% 0.012 95)"/></svg>
+        <svg class="pin" viewBox="0 0 48 60"><path d="M24 58C24 58 4 36 4 22a20 20 0 0 1 40 0c0 14-20 36-20 36z" fill="oklch(56% 0.12 215)"/><circle cx="24" cy="22" r="7" fill="oklch(97% 0.012 95)"/></svg>
+        <svg class="pin" viewBox="0 0 48 60"><path d="M24 58C24 58 4 36 4 22a20 20 0 0 1 40 0c0 14-20 36-20 36z" fill="oklch(56% 0.12 215)"/><circle cx="24" cy="22" r="7" fill="oklch(97% 0.012 95)"/></svg>
+        <svg class="pin" viewBox="0 0 48 60"><path d="M24 58C24 58 4 36 4 22a20 20 0 0 1 40 0c0 14-20 36-20 36z" fill="oklch(56% 0.12 215)"/><circle cx="24" cy="22" r="7" fill="oklch(97% 0.012 95)"/></svg>
+        <svg class="pin" viewBox="0 0 48 60"><path d="M24 58C24 58 4 36 4 22a20 20 0 0 1 40 0c0 14-20 36-20 36z" fill="oklch(56% 0.12 215)"/><circle cx="24" cy="22" r="7" fill="oklch(97% 0.012 95)"/></svg>
+        <svg class="pin" viewBox="0 0 48 60"><path d="M24 58C24 58 4 36 4 22a20 20 0 0 1 40 0c0 14-20 36-20 36z" fill="none" stroke="oklch(26% 0.035 250 / .3)" stroke-width="4"/><circle cx="24" cy="22" r="7" fill="oklch(26% 0.035 250 / .3)"/></svg>
+        <svg class="pin" viewBox="0 0 48 60"><path d="M24 58C24 58 4 36 4 22a20 20 0 0 1 40 0c0 14-20 36-20 36z" fill="none" stroke="oklch(26% 0.035 250 / .3)" stroke-width="4"/><circle cx="24" cy="22" r="7" fill="oklch(26% 0.035 250 / .3)"/></svg>
+      </div>
+      <p class="callout">״לרוב אני מגלה את המפגע רק שאני מגיעה למקום.״</p>
+      <p class="who">סטודנטית, תל אביב</p>
+    </div>
+  </div>
+  <aside class="notes">הממצא שחזר הכי הרבה.</aside>
+</section>
+
+</div></div>
+<div class="notes-panel"></div><div class="deck-count"></div>
+<script src="../../_engine.js"></script>
+</body>
+</html>
