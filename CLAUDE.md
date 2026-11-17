@@ -24,6 +24,13 @@ DESIGN RULES:
 - If it looks like a template, it failed
 
 OUTPUT: Editable PPTX + interactive HTML + speaker notes per slide + sources file
+
+DELIVERY (MANDATORY, NO EXCEPTIONS):
+Every time a deck is created or changed, the user gets it in the chat as downloadable files: PDF + PPTX. Always. A deck is not "done" until both files were sent.
+1. Run `tools/export-deck.sh decks/<name>/index.html` -> writes `decks/<name>/<name>.pdf` and `<name>.pptx` (slide images + speaker notes).
+2. Send BOTH files to the user with the send-file tool (SendUserFile) in the same turn, next to the preview image.
+3. Commit and push both files with the deck.
+This applies to every version: first draft, every revision, every fix. Never answer "the deck is ready" without the two files attached.
 QA: Impeccable /audit + TASTE 62-point checklist + UX PSYCHOLOGY review (below) + Plannotator human approval
 SECURITY: SkillSpector static DO NOT INSTALL = CAUTION, not BLOCK. Manual grep for curl|sh, .env, secrets required. BLOCK only on exfiltration, network to unknown, or secret access.
 
