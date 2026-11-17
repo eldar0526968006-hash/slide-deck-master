@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>סורקים לפני שמתקינים</title>
+<meta name="description" content="למה סוכן המצגות מתקין סקיל רק אחרי סריקה, grep ידני ונעילה ל-commit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_base.css">
+<style>
+  /* Three colours, OKLCH. Everything else is a mix of these. */
+  :root {
+    --ground: oklch(19% 0.012 250);
+    --paper:  oklch(95% 0.008 85);
+    --signal: oklch(80% 0.155 75);
+    --dim:    color-mix(in oklch, var(--paper) 58%, var(--ground));
+    --line:   color-mix(in oklch, var(--paper) 14%, var(--ground));
+    --raise:  color-mix(in oklch, var(--paper) 6%, var(--ground));
+    --stage-bg: var(--ground); --slide-bg: var(--ground);
+    --sans: 'Heebo', sans-serif; --mono: 'IBM Plex Mono', ui-monospace, monospace;
+    --r: 28px;
+  }
+  .slide { color: var(--paper); font-family: var(--sans); padding: 120px 136px; box-sizing: border-box; }
+  .slide.light { background: var(--paper); color: var(--ground); --dim: color-mix(in oklch, var(--ground) 62%, var(--paper)); --line: color-mix(in oklch, var(--ground) 14%, var(--paper)); --raise: color-mix(in oklch, var(--ground) 5%, var(--paper)); }
+  h1, h2 { margin: 0; font-weight: 900; letter-spacing: -0.02em; line-height: 1.02; }
+  h1 { font-size: 132px; }
+  h2 { font-size: 88px; max-width: 1400px; }
+  p { margin: 0; }
+  .lead { font-size: 36px; line-height: 1.45; color: var(--dim); max-width: 1100px; }
+  .sig { color: var(--signal); }
+  .light .sig, .light .gate .n { color: oklch(60% 0.15 62); }
+  .mono { font-family: var(--mono); direction: ltr; unicode-bidi: isolate; }
+  .col { display: flex; flex-direction: column; gap: 40px; }
+  .fill { height: 100%; justify-content: center; }
+
+  /* Hook */
+  .hook { display: grid; grid-template-columns: 1fr 760px; align-items: center; height: 100%; gap: 80px; }
+  .giant { font-size: 380px; font-weight: 900; line-height: .85; letter-spacing: -0.05em; color: var(--signal); direction: ltr; text-align: left; }
+  .giant small { font-size: 160px; }
+  .src { font-size: 24px; color: var(--dim); }
+
+  /* Faux terminal (Stageshow-style product surface) */
+  .term { background: var(--raise); border-radius: var(--r); overflow: hidden; box-shadow: 0 40px 80px -30px oklch(0% 0 0 / .6); direction: ltr; text-align: left; }
+  .term-bar { display: flex; gap: 10px; align-items: center; padding: 20px 26px; border-bottom: 1px solid var(--line); }
+  .term-bar i { width: 13px; height: 13px; border-radius: 50%; background: var(--line); }
+  .term-bar span { margin-left: 14px; font: 500 20px var(--mono); color: var(--dim); }
+  .term pre { margin: 0; padding: 34px 38px; font: 400 27px/1.65 var(--mono); color: var(--paper); white-space: pre-wrap; }
+  .term .p { color: var(--dim); } .term .hl { color: var(--signal); } .term .ok { color: var(--paper); font-weight: 600; }
+  .term mark { background: color-mix(in oklch, var(--signal) 26%, transparent); color: var(--paper); border-radius: 6px; padding: 0 6px; }
+  .split { display: grid; grid-template-columns: 640px 1fr; gap: 96px; align-items: center; height: 100%; }
+
+  /* Dot field: 9 skills */
+  .dots { display: grid; grid-template-columns: repeat(9, 1fr); gap: 28px; direction: ltr; }
+  .dot { aspect-ratio: 1; border-radius: 50%; border: 3px solid var(--line); display: grid; place-items: center; font: 600 22px var(--mono); color: var(--dim); }
+  .dot.flag { background: var(--signal); border-color: var(--signal); color: var(--ground); }
+  .dot-key { display: grid; grid-template-columns: repeat(9, 1fr); gap: 28px; direction: ltr; font: 400 19px var(--mono); color: var(--dim); text-align: center; margin-top: -16px; }
+
+  /* Bento: varied rectangles, one hero cell */
+  .bento { display: grid; gap: 24px; height: 600px; }
+  .cell { background: var(--raise); border: 1px solid var(--line); border-radius: var(--r); padding: 44px 48px; display: flex; flex-direction: column; gap: 18px; }
+  .cell h3 { margin: 0; font-size: 44px; font-weight: 800; }
+  .cell p { font-size: 28px; line-height: 1.5; color: var(--dim); }
+  .cell.hero { background: var(--signal); border-color: var(--signal); color: var(--ground); }
+  .cell.hero h3 { font-size: 72px; font-weight: 900; }
+  .cell.hero p { color: color-mix(in oklch, var(--ground) 78%, var(--signal)); font-size: 32px; }
+  .tag { font: 600 22px var(--mono); letter-spacing: .08em; direction: ltr; text-align: right; }
+  .b-rules { grid-template-columns: 1.55fr 1fr; grid-template-rows: 1fr 1fr; }
+  .b-rules .hero { grid-row: span 2; justify-content: flex-end; }
+
+  /* Gates */
+  .gates { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; align-items: stretch; }
+  .gate { padding: 0 48px; border-inline-start: 2px solid var(--line); display: flex; flex-direction: column; gap: 22px; }
+  .gate:first-child { border-inline-start: 0; padding-inline-start: 0; }
+  .gate .n { font: 600 120px/1 var(--mono); color: var(--signal); direction: ltr; text-align: right; }
+  .gate h3 { margin: 0; font-size: 48px; font-weight: 800; }
+  .gate p { font-size: 28px; line-height: 1.5; color: var(--dim); }
+
+  /* Lockfile bento */
+  .b-lock { grid-template-columns: repeat(4, 1fr); grid-template-rows: 1fr 1fr; height: 560px; }
+  .b-lock .hero { grid-column: span 2; grid-row: span 2; justify-content: space-between; }
+  .b-lock .cell { padding: 32px 36px; gap: 8px; justify-content: flex-end; }
+  .b-lock .cell b { font-size: 30px; font-weight: 800; }
+  .b-lock .cell .mono { font-size: 22px; color: var(--dim); text-align: right; }
+  .b-lock .hero .k { font: 900 220px/0.9 var(--sans); letter-spacing: -0.04em; }
+
+  /* Close */
+  .cta { display: flex; flex-direction: column; justify-content: center; height: 100%; gap: 56px; }
+  .cta h2 { font-size: 120px; }
+  .asks { display: flex; gap: 24px; }
+  .ask { border: 2px solid var(--line); border-radius: 999px; padding: 22px 40px; font-size: 32px; font-weight: 500; }
+  .ask.on { background: var(--signal); border-color: var(--signal); color: var(--ground); font-weight: 800; }
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+<div class="deck-stage">
+
+<!-- 1 · Hook -->
+<section class="slide">
+  <div class="hook">
+    <div class="col">
+      <h1 class="enter e-rise">רבע מהסקילים<br>פגיעים.</h1>
+      <p class="lead enter e-rise" style="--d:2">לכן הסוכן שלנו לא מתקין שום דבר לפני שסרק אותו.</p>
+      <p class="src enter e-rise" style="--d:3">NVIDIA, מחקר על 31,132 סקילים</p>
+    </div>
+    <div class="giant enter e-zoom" style="--d:1">26.1<small>%</small></div>
+  </div>
+  <aside class="notes">פתיחה: הנתון מ-NVIDIA. מתוך 31,132 סקילים שנבדקו, 26.1% מכילים פגיעות ו-5.2% מראים כוונה זדונית אפשרית. כל סקיל רץ עם כל ההרשאות של הסוכן, ולכן זה לא תרגיל תיאורטי.</aside>
+</section>
+
+<!-- 2 · Problem: full permissions -->
+<section class="slide">
+  <div class="split">
+    <div class="col">
+      <h2 class="enter e-slide">סקיל רץ עם כל<br>ההרשאות של <span class="sig">הסוכן</span>.</h2>
+      <p class="lead enter e-slide" style="--d:2">זה לא אנחנו אומרים. זו השורה האחרונה שמדפיס כלי ההתקנה עצמו.</p>
+    </div>
+    <div class="term enter e-slide" style="--d:1">
+      <div class="term-bar"><i></i><i></i><i></i><span>presentation-agent</span></div>
+<pre><span class="p">$</span> npx skills add make-interfaces-feel-better
+<span class="p">✓</span> make-interfaces-feel-better (copied)
+  → ./.claude/skills/make-interfaces-feel-better
+
+<span class="p">—</span> Done!  <mark>Review skills before use; they run
+  with full agent permissions.</mark></pre>
+    </div>
+  </div>
+  <aside class="notes">הפלט הזה אמיתי, מההתקנה שהרצנו. הכלי עצמו מזהיר: סקילים רצים עם הרשאות מלאות של הסוכן. כלומר הם יכולים לקרוא קבצים, להריץ פקודות ולשלוח בקשות רשת.</aside>
+</section>
+
+<!-- 3 · Problem: scanner blocked 6/9 -->
+<section class="slide">
+  <div class="col fill" style="gap:72px">
+    <h2 class="enter e-fade">הסורק הסטטי חסם <span class="sig">6 מתוך 9</span> סקילים.</h2>
+    <div class="enter e-fade" style="--d:2">
+      <div class="dots">
+        <div class="dot flag">T</div><div class="dot flag">A</div><div class="dot flag">S</div>
+        <div class="dot flag">I</div><div class="dot flag">F</div><div class="dot flag">H</div>
+        <div class="dot">M</div><div class="dot">P</div><div class="dot">N</div>
+      </div>
+      <div class="dot-key" style="margin-top:20px"><span>TASTE</span><span>Astryx</span><span>Stage­show</span><span>Impec­cable</span><span>Front­end Slides</span><span>Slide­show</span><span>MIFB</span><span>Plan­notator</span><span>motion</span></div>
+    </div>
+    <p class="lead enter e-fade" style="--d:3">כולם קיבלו <span class="mono">DO NOT INSTALL</span>. כולל מערכת העיצוב של Meta.</p>
+  </div>
+  <aside class="notes">SkillSpector רץ במצב סטטי, בלי LLM. שישה מתוך תשעה קיבלו DO NOT INSTALL: TASTE, Astryx, Stageshow, Impeccable, Frontend Slides ו-Slideshow. אם היינו מצייתים לציון, לא היה לנו סוכן.</aside>
+</section>
+
+<!-- 4 · Turn: 0 real threats -->
+<section class="slide light">
+  <div class="split" style="grid-template-columns: 1fr 820px">
+    <div class="col">
+      <h2 class="enter e-wipe">בדיקה ידנית מצאה<br><span class="sig">0</span> איומים אמיתיים.</h2>
+      <p class="lead enter e-wipe" style="--d:2">4 התאמות ב-grep. כולן מגינות על סודות, אף אחת לא נוגעת בהם.</p>
+    </div>
+    <div class="term enter e-wipe" style="--d:1; --raise: oklch(19% 0.012 250); --line: oklch(30% 0.012 250); --paper: oklch(95% 0.008 85); --dim: oklch(68% 0.01 250); color: var(--paper)">
+      <div class="term-bar"><i></i><i></i><i></i><span>grep -RinE 'curl.*|sh|API_KEY|SECRET|.env'</span></div>
+<pre><span class="hl">impeccable</span>  foundations.md:27
+  <span class="p">secrets-out-of-repo: no tracked file holds a key</span>
+<span class="hl">astryx</span>      publishing.doc.mjs:49
+  <span class="p">warns: npm may pack your .env file</span>
+<span class="hl">astryx</span>      _adapter.mjs:386
+  <span class="p">env: {...process.env}  → child process</span>
+<span class="hl">astryx</span>      redact.mjs:46
+  <span class="p">redacts API_KEY from debug output</span>
+
+<span class="ok">taste · stageshow · frontend-slides · slideshow: 0</span></pre>
+    </div>
+  </div>
+  <aside class="notes">הרצנו grep על כל ששת הסקילים: curl|sh, wget|sh, API_KEY, SECRET, .env, ~/.ssh. ארבע התאמות בלבד, וכולן הפוכות לאיום: כלל שבודק שאין סודות בריפו, אזהרה לא לפרסם .env, העברת env לתהליך בן, ומודול שמסתיר מפתחות.</aside>
+</section>
+
+<!-- 5 · Why: "never" is style -->
+<section class="slide">
+  <div class="col fill" style="gap:64px">
+    <h2 class="enter e-rise">בסקיל עיצוב, <span class="sig">"never"</span><br>זו הוראת סגנון, לא עקיפה.</h2>
+    <div class="term enter e-rise" style="--d:1; max-width:1500px">
+      <div class="term-bar"><i></i><i></i><i></i><span>frontend-slides/html-template.md:15 · flagged AR2 Anti-Refusal</span></div>
+<pre>&lt;!-- Fonts: use Fontshare or Google Fonts — <mark>never system fonts</mark> --&gt;</pre>
+    </div>
+  </div>
+  <aside class="notes">שלושת הפוזיטיבים השקריים הנפוצים: "never X" נקרא כ-anti-refusal, הערת HTML נקראת כהוראה נסתרת, וכתיבה ל-CLAUDE.md נקראת כ-persistence. אצל Astryx זה בדיוק התפקיד שלו. השורה כאן סומנה כ-HIGH.</aside>
+</section>
+
+<!-- 6 · Solution: the rule -->
+<section class="slide">
+  <div class="col fill" style="gap:56px">
+    <h2 class="enter e-zoom">חוסמים רק על <span class="sig">סודות ורשת</span>.</h2>
+    <div class="bento b-rules enter e-zoom" style="--d:1">
+      <div class="cell hero">
+        <span class="tag">BLOCK</span>
+        <h3>לא מתקינים.</h3>
+        <p>הוצאת מידע, <span class="mono">curl|sh</span>, קריאת <span class="mono">.env</span> או <span class="mono">~/.ssh</span>, רשת לכתובת לא מוכרת.</p>
+      </div>
+      <div class="cell"><span class="tag sig">CAUTION</span><h3>מתקינים אחרי grep ידני</h3><p>ניסוחי <span class="mono">never</span>, הערות HTML, כתיבה ל-<span class="mono">CLAUDE.md</span>.</p></div>
+      <div class="cell"><span class="tag" style="color:var(--dim)">SAFE</span><h3>מתקינים</h3><p>ציון 0, ועדיין נעולים לגרסה שנסרקה.</p></div>
+    </div>
+  </div>
+  <aside class="notes">הכלל החדש ב-CLAUDE.md. DO NOT INSTALL סטטי הופך ל-CAUTION. חסימה אמיתית רק כשיש גישה לסודות, הרצת קוד מרוחק או רשת לכתובת לא מוכרת.</aside>
+</section>
+
+<!-- 7 · How: 3 gates -->
+<section class="slide light">
+  <div class="col fill" style="gap:88px">
+    <h2 class="enter e-slide">כל סקיל עובר <span class="sig">3 שערים</span> לפני שהוא נוגע בקוד.</h2>
+    <div class="gates enter e-slide" style="--d:1">
+      <div class="gate"><span class="n">01</span><h3>סריקה</h3><p>SkillSpector על העותק המקומי, לא על main החי.</p></div>
+      <div class="gate"><span class="n">02</span><h3>grep</h3><p>סודות, <span class="mono">curl|sh</span> ורשת. כל התאמה נקראת ידנית.</p></div>
+      <div class="gate"><span class="n">03</span><h3>נעילה</h3><p>מתקינים את אותו עותק שנסרק, נעול לגרסה שלו.</p></div>
+    </div>
+  </div>
+  <aside class="notes">הנקודה החשובה בשער 3: לא מריצים npx skills add מחדש מ-main, כי אז מה שמותקן הוא לא מה שנסרק. מעתיקים את אותו clone ושומרים את ה-commit ב-SECURITY-SCANS.md.</aside>
+</section>
+
+<!-- 8 · Proof: 9 locked -->
+<section class="slide">
+  <div class="col fill" style="gap:56px">
+    <h2 class="enter e-fade">כל 9 הסקילים מותקנים, <span class="sig">נעולים לגרסה</span>.</h2>
+    <div class="bento b-lock enter e-fade" style="--d:1">
+      <div class="cell hero"><span class="tag">INSTALLED</span><span class="k">9/9</span></div>
+      <div class="cell"><b>TASTE</b><span class="mono">f6b7657</span></div>
+      <div class="cell"><b>Stageshow</b><span class="mono">299140f</span></div>
+      <div class="cell"><b>Impeccable</b><span class="mono">d41d986</span></div>
+      <div class="cell"><b>Astryx</b><span class="mono">0.7.16</span></div>
+    </div>
+  </div>
+  <aside class="notes">בנוסף לארבעה שעל המסך: Frontend Slides 9906a34, Slideshow efc91fc, Make Interfaces Feel Better 1a2aa96, motion-prompt 683ecca, Plannotator 842ccce3. הרשימה המלאה ב-SECURITY-SCANS.md.</aside>
+</section>
+
+<!-- 9 · Honest gap -->
+<section class="slide light">
+  <div class="split" style="grid-template-columns: 1fr 860px">
+    <div class="col">
+      <h2 class="enter e-rise">מה עוד חסר:<br>סריקה עם <span class="sig">LLM</span>.</h2>
+      <p class="lead enter e-rise" style="--d:2">הסריקה הסטטית מכירה 71 דפוסים, לא הקשר. בשביל זה צריך לחבר ספק LLM.</p>
+    </div>
+    <div class="term enter e-rise" style="--d:1; --raise: oklch(19% 0.012 250); --line: oklch(30% 0.012 250); --paper: oklch(95% 0.008 85); --dim: oklch(68% 0.01 250); color: var(--paper)">
+      <div class="term-bar"><i></i><i></i><i></i><span>next run</span></div>
+<pre><span class="p">$</span> export SKILLSPECTOR_PROVIDER=anthropic
+<span class="p">$</span> skillspector scan .claude/skills \
+    --recursive
+
+<span class="hl">waiting for API key</span></pre>
+    </div>
+  </div>
+  <aside class="notes">SAFE פירושו שום דבר לא התאים לדפוסים הידועים, לא שהסקיל בטוח. שלב ה-LLM אופציונלי ודורש מפתח, ועדיין לא רץ.</aside>
+</section>
+
+<!-- 10 · CTA -->
+<section class="slide">
+  <div class="cta">
+    <h2 class="enter e-zoom">מאשרים את הכלל.<br><span class="sig">בונים מצגות.</span></h2>
+    <div class="asks enter e-zoom" style="--d:2">
+      <span class="ask on">אישור CLAUDE.md v3</span>
+      <span class="ask">מפתח LLM לסריקה</span>
+    </div>
+  </div>
+  <aside class="notes">שתי בקשות: לאשר את כלל ה-CAUTION שכבר נמצא ב-CLAUDE.md, ולחבר מפתח LLM כדי שהסריקה הבאה תבדיל לבד בין פוזיטיב שקרי לאמיתי.</aside>
+</section>
+
+</div>
+</div>
+<div class="notes-panel" aria-live="polite"></div>
+<div class="deck-count"></div>
+<script src="../_engine.js"></script>
+</body>
+</html>

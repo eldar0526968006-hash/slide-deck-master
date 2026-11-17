@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>תפסיקו לקרוא שוב</title>
+<meta name="description" content="למה שליפה מהזיכרון מנצחת קריאה חוזרת, לפי Roediger & Karpicke 2006 ו-Dunlosky 2013.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;900&family=Assistant:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_base.css">
+<style>
+  :root {
+    --paper: oklch(95.5% 0.018 80);
+    --ink:   oklch(23% 0.025 255);
+    --tomato: oklch(53% 0.18 33);
+    --dim:  color-mix(in oklch, var(--ink) 60%, var(--paper));
+    --rule: color-mix(in oklch, var(--ink) 16%, var(--paper));
+    --tint: color-mix(in oklch, var(--ink) 5%, var(--paper));
+    --stage-bg: var(--paper); --slide-bg: var(--paper);
+    --serif: 'Frank Ruhl Libre', serif; --sans: 'Assistant', sans-serif;
+  }
+  .slide { color: var(--ink); font-family: var(--sans); padding: 112px 144px; box-sizing: border-box; }
+  .slide.dark { background: var(--ink); color: var(--paper); --dim: color-mix(in oklch, var(--paper) 62%, var(--ink)); --rule: color-mix(in oklch, var(--paper) 18%, var(--ink)); --tint: color-mix(in oklch, var(--paper) 7%, var(--ink)); }
+  .slide.hot { background: var(--tomato); color: var(--paper); --dim: var(--paper); }
+  h1, h2 { margin: 0; font-family: var(--serif); font-weight: 900; line-height: 1.05; letter-spacing: -0.01em; }
+  h1 { font-size: 150px; }
+  h2 { font-size: 92px; max-width: 1450px; }
+  p { margin: 0; }
+  .lead { font-size: 38px; line-height: 1.5; color: var(--dim); max-width: 1050px; }
+  .t { color: var(--tomato); }
+  .dark .t, .dark .stop b { color: oklch(70% 0.16 36); }
+  .dark .stop b { background: oklch(70% 0.16 36); }
+  .num { font-family: var(--serif); font-weight: 900; direction: ltr; unicode-bidi: isolate; }
+  .col { display: flex; flex-direction: column; gap: 44px; }
+  .fill { height: 100%; justify-content: center; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: center; height: 100%; }
+  .cite { font-size: 24px; color: var(--dim); }
+
+  /* Cover */
+  .cover { display: grid; grid-template-rows: 1fr auto; height: 100%; }
+  .cover h1 { font-size: 200px; align-self: end; }
+  .cover .row { display: flex; justify-content: space-between; align-items: end; border-top: 2px solid var(--rule); padding-top: 36px; margin-top: 56px; }
+  .big40 { font-size: 300px; line-height: .8; color: var(--tomato); }
+
+  /* Feeling vs fact */
+  .meter { display: grid; gap: 40px; }
+  .meter-row { display: grid; grid-template-columns: 260px 1fr; gap: 32px; align-items: center; font-size: 32px; }
+  .bar { height: 64px; border-radius: 999px; background: var(--tint); position: relative; overflow: hidden; }
+  .bar i { position: absolute; inset-block: 0; right: 0; border-radius: 999px; background: var(--ink); }
+  .bar.t i { background: var(--tomato); }
+
+  /* Charts */
+  .chart { width: 100%; height: auto; overflow: visible; direction: ltr; }
+  .chart text { font-family: var(--sans); }
+
+  /* Bento: method */
+  .bento { display: grid; grid-template-columns: 1.6fr 1fr; grid-template-rows: 1fr 1fr; gap: 24px; height: 580px; }
+  .cell { border-radius: 32px; background: var(--tint); padding: 44px 52px; display: flex; flex-direction: column; justify-content: flex-end; gap: 14px; }
+  .cell .k { font-family: var(--serif); font-weight: 900; font-size: 64px; color: var(--tomato); line-height: 1; }
+  .cell h3 { margin: 0; font-size: 44px; font-weight: 800; }
+  .cell p { font-size: 28px; line-height: 1.5; color: var(--dim); }
+  .cell.hero { grid-row: span 2; background: var(--ink); color: var(--paper); }
+  .cell.hero .k { font-size: 200px; color: oklch(70% 0.16 36); }
+  .cell.hero h3 { font-size: 64px; font-family: var(--serif); font-weight: 900; }
+  .cell.hero p { color: color-mix(in oklch, var(--paper) 70%, var(--ink)); font-size: 32px; }
+
+  /* Spacing timeline */
+  .line { position: relative; height: 300px; }
+  .line .axis { position: absolute; inset-inline: 0; top: 120px; height: 4px; background: var(--rule); border-radius: 2px; }
+  .stop { position: absolute; top: 0; transform: translateX(50%); display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
+  .stop b { width: 64px; height: 64px; margin-top: 90px; border-radius: 50%; background: var(--tomato); box-shadow: 0 0 0 12px var(--paper); }
+  .stop span { font-size: 34px; font-weight: 800; }
+  .stop small { font-size: 26px; color: var(--dim); }
+  .stop.first b { background: var(--ink); }
+
+  /* Ten techniques */
+  .ten { display: grid; grid-template-columns: repeat(5, 1fr); gap: 22px 28px; }
+  .tech { border-top: 4px solid var(--rule); padding-top: 18px; font-size: 28px; line-height: 1.3; color: var(--dim); min-height: 96px; }
+  .tech.hi { border-color: var(--tomato); color: var(--ink); font-weight: 800; }
+  .tech em { display: block; font-style: normal; font-size: 22px; font-weight: 600; color: var(--tomato); margin-top: 6px; }
+
+  /* CTA */
+  .cta { display: flex; flex-direction: column; justify-content: center; height: 100%; gap: 56px; }
+  .cta h2 { font-size: 150px; max-width: none; }
+  .steps { display: flex; gap: 28px; font-size: 38px; font-weight: 600; }
+  .steps span { border: 2px solid color-mix(in oklch, var(--paper) 55%, var(--tomato)); border-radius: 999px; padding: 18px 40px; }
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+<div class="deck-stage">
+
+<!-- 1 · Hook -->
+<section class="slide">
+  <div class="cover">
+    <h1 class="enter e-rise">קראתם שוב ושוב.<br>אחרי שבוע נשאר <span class="t">40%</span>.</h1>
+    <div class="row enter e-fade" style="--d:3">
+      <p class="lead" style="font-size:34px">ובקבוצה שהתבחנה במקום לקרוא: 61%.</p>
+      <p class="cite">Roediger & Karpicke, 2006</p>
+    </div>
+  </div>
+  <aside class="notes">פתיחה. סטודנטים קראו טקסט מדעי קצר. קבוצה אחת קראה אותו ארבע פעמים, קבוצה אחרת קראה פעם אחת והתבחנה שלוש פעמים. אחרי שבוע, הקוראים זכרו 40% מיחידות הרעיון, המתבחנים 61%.</aside>
+</section>
+
+<!-- 2 · Problem: fluency illusion -->
+<section class="slide dark">
+  <div class="split">
+    <div class="col">
+      <h2 class="enter e-fade">קריאה חוזרת <span class="t">מרגישה</span> כמו למידה.</h2>
+      <p class="lead enter e-fade" style="--d:2">הטקסט נהיה מוכר, ומוכר נשמע כמו "אני יודע". באותו מחקר, הקוראים צפו לעצמם ציון גבוה יותר. הם טעו.</p>
+    </div>
+    <svg class="chart enter e-fade" style="--d:1" viewBox="0 0 760 520" role="img" aria-label="תחושת ביטחון מול זכירה בפועל">
+      <text x="760" y="40" text-anchor="end" font-size="30" fill="currentColor" font-weight="800">קריאה חוזרת</text>
+      <text x="760" y="80" text-anchor="end" font-size="24" fill="currentColor" opacity=".65">תחושה: גבוהה · זכירה אחרי שבוע: 40%</text>
+      <rect x="0" y="110" width="760" height="56" rx="28" fill="currentColor" opacity=".12"/>
+      <rect x="456" y="110" width="304" height="56" rx="28" fill="currentColor"/>
+      <text x="760" y="300" text-anchor="end" font-size="30" fill="oklch(70% 0.16 36)" font-weight="800">שליפה</text>
+      <text x="760" y="340" text-anchor="end" font-size="24" fill="currentColor" opacity=".65">תחושה: נמוכה יותר · זכירה אחרי שבוע: 61%</text>
+      <rect x="0" y="370" width="760" height="56" rx="28" fill="currentColor" opacity=".12"/>
+      <rect x="296" y="370" width="464" height="56" rx="28" fill="oklch(70% 0.16 36)"/>
+    </svg>
+  </div>
+  <aside class="notes">Illusion of fluency. ב-Roediger & Karpicke 2006 הקבוצה שקראה ארבע פעמים דירגה את הלמידה שלה גבוה יותר מהקבוצה שהתבחנה, ובפועל זכרה פחות אחרי שבוע. הפסים מציגים את הזכירה בפועל.</aside>
+</section>
+
+<!-- 3 · Twist: short vs long term -->
+<section class="slide">
+  <div class="col fill" style="gap:40px">
+    <h2 class="enter e-wipe">אחרי 5 דקות קריאה מנצחת. <span class="t">אחרי שבוע היא מפסידה.</span></h2>
+    <svg class="chart enter e-wipe" style="--d:1" viewBox="0 0 1630 600" role="img" aria-label="זכירה אחרי 5 דקות ואחרי שבוע, לפי שלוש קבוצות">
+      <g font-size="26" fill="oklch(23% 0.025 255 / .6)">
+        <line x1="0" x2="1630" y1="520" y2="520" stroke="oklch(23% 0.025 255 / .2)" stroke-width="2"/>
+      </g>
+      <!-- 5 minutes group (right, RTL first) -->
+      <text x="1630" y="580" text-anchor="end" font-size="30" font-weight="800" fill="oklch(23% 0.025 255)">אחרי 5 דקות</text>
+      <g>
+        <rect x="1440" y="105" width="150" height="415" rx="18" fill="oklch(23% 0.025 255)"/><text x="1515" y="85" text-anchor="middle" font-size="40" font-weight="800" fill="oklch(23% 0.025 255)">83%</text>
+        <rect x="1270" y="130" width="150" height="390" rx="18" fill="oklch(23% 0.025 255 / .45)"/><text x="1345" y="110" text-anchor="middle" font-size="40" font-weight="800" fill="oklch(23% 0.025 255)">78%</text>
+        <rect x="1100" y="165" width="150" height="355" rx="18" fill="oklch(53% 0.18 33)"/><text x="1175" y="145" text-anchor="middle" font-size="40" font-weight="800" fill="oklch(53% 0.18 33)">71%</text>
+      </g>
+      <!-- 1 week group -->
+      <text x="760" y="580" text-anchor="end" font-size="30" font-weight="800" fill="oklch(23% 0.025 255)">אחרי שבוע</text>
+      <g>
+        <rect x="570" y="320" width="150" height="200" rx="18" fill="oklch(23% 0.025 255)"/><text x="645" y="300" text-anchor="middle" font-size="40" font-weight="800" fill="oklch(23% 0.025 255)">40%</text>
+        <rect x="400" y="240" width="150" height="280" rx="18" fill="oklch(23% 0.025 255 / .45)"/><text x="475" y="220" text-anchor="middle" font-size="40" font-weight="800" fill="oklch(23% 0.025 255)">56%</text>
+        <rect x="230" y="215" width="150" height="305" rx="18" fill="oklch(53% 0.18 33)"/><text x="305" y="195" text-anchor="middle" font-size="40" font-weight="800" fill="oklch(53% 0.18 33)">61%</text>
+      </g>
+      <g font-size="26" fill="oklch(23% 0.025 255 / .7)">
+        <rect x="0" y="0" width="26" height="26" rx="6" fill="oklch(23% 0.025 255)"/><text x="40" y="22">קריאה ×4</text>
+        <rect x="200" y="0" width="26" height="26" rx="6" fill="oklch(23% 0.025 255 / .45)"/><text x="240" y="22">קריאה ×3, מבחן ×1</text>
+        <rect x="0" y="48" width="26" height="26" rx="6" fill="oklch(53% 0.18 33)"/><text x="40" y="70">קריאה ×1, מבחן ×3</text>
+      </g>
+    </svg>
+  </div>
+  <aside class="notes">ניסוי 2. ב-5 דקות: 83 / 78 / 71 לטובת הקריאה. אחרי שבוע ההיפוך: 40 / 56 / 61. אחוזים של יחידות רעיון שנזכרו. זה הרגע שבו כל סטודנט שלומד בלילה שלפני המבחן מבין למה זה "עובד" רק עד המבחן.</aside>
+</section>
+
+<!-- 4 · Mechanism -->
+<section class="slide hot">
+  <div class="col fill" style="gap:48px">
+    <h2 class="enter e-zoom" style="font-size:120px; max-width:1500px">כל שליפה סוללת מחדש את הדרך לזיכרון.</h2>
+    <p class="lead enter e-zoom" style="--d:2; font-size:42px">קריאה מכניסה מידע. שליפה מתרגלת את הדבר שהמבחן באמת דורש: להוציא אותו.</p>
+  </div>
+  <aside class="notes">ההסבר המקובל: המבחן עצמו הוא אירוע למידה. כשמוציאים מידע מהזיכרון, הדרך אליו מתחזקת. שקף הצהרה, בלי ויזואל נוסף, כדי שהמשפט יישאר.</aside>
+</section>
+
+<!-- 5 · Breadth: 10 techniques -->
+<section class="slide">
+  <div class="col fill" style="gap:64px">
+    <h2 class="enter e-rise">מתוך 10 שיטות למידה, רק <span class="t">2</span> קיבלו ציון גבוה.</h2>
+    <div class="ten enter e-rise" style="--d:1">
+      <div class="tech hi">מבחנים לתרגול<em>תועלת גבוהה</em></div>
+      <div class="tech hi">למידה מרווחת<em>תועלת גבוהה</em></div>
+      <div class="tech">לימוד משולב</div>
+      <div class="tech">חקירה שואלת</div>
+      <div class="tech">הסבר עצמי</div>
+      <div class="tech">סיכום</div>
+      <div class="tech">הדגשה בטוש</div>
+      <div class="tech">מילת מפתח</div>
+      <div class="tech">דימוי חזותי</div>
+      <div class="tech">קריאה חוזרת</div>
+    </div>
+    <p class="cite enter e-rise" style="--d:2">Dunlosky et al., 2013, Psychological Science in the Public Interest</p>
+  </div>
+  <aside class="notes">סקירה של עשר טכניקות. רק שתיים קיבלו "high utility": practice testing ו-distributed practice. שלוש קיבלו בינוני (interleaved, elaborative interrogation, self-explanation). קריאה חוזרת והדגשה קיבלו "low utility".</aside>
+</section>
+
+<!-- 6 · Method bento -->
+<section class="slide">
+  <div class="col fill" style="gap:52px">
+    <h2 class="enter e-slide">השיטה: 3 צעדים, אפס כלים.</h2>
+    <div class="bento enter e-slide" style="--d:1">
+      <div class="cell hero"><span class="k">1</span><h3>סוגרים את הספר.</h3><p>דף ריק, וכותבים כל מה שזוכרים מהפרק.</p></div>
+      <div class="cell"><span class="k">2</span><h3>פותחים ובודקים</h3><p>מסמנים מה חסר ומה היה שגוי.</p></div>
+      <div class="cell"><span class="k">3</span><h3>שולפים רק את הפער</h3><p>ספר סגור שוב, רק על מה שפספסתם.</p></div>
+    </div>
+  </div>
+  <aside class="notes">זו המלצה מעשית שנגזרת מהמחקר, לא נתון. הצעד הראשון הוא העיקר: לכתוב מהזיכרון לפני שמסתכלים. המשוב בצעד 2 חשוב, שליפה בלי בדיקה משמרת גם טעויות.</aside>
+</section>
+
+<!-- 7 · Spacing -->
+<section class="slide dark">
+  <div class="col fill" style="gap:80px">
+    <h2 class="enter e-fade">שולפים שוב כשכבר <span class="t">קצת שוכחים</span>.</h2>
+    <div class="line enter e-fade" style="--d:1">
+      <div class="axis"></div>
+      <div class="stop first" style="right:6%"><b style="background:var(--paper)"></b><span>היום</span><small>לומדים</small></div>
+      <div class="stop" style="right:30%"><b></b><span>מחר</span><small>שליפה 1</small></div>
+      <div class="stop" style="right:58%"><b></b><span>עוד 3 ימים</span><small>שליפה 2</small></div>
+      <div class="stop" style="right:92%"><b></b><span>עוד שבוע</span><small>שליפה 3</small></div>
+    </div>
+  </div>
+  <aside class="notes">הטכניקה השנייה מ-Dunlosky: למידה מרווחת. הלוח כאן הוא דוגמה, לא מרשם מדויק מהמחקר. העיקרון: כל מרווח ארוך מהקודם, ושולפים כשזה כבר קצת קשה.</aside>
+</section>
+
+<!-- 8 · Objection -->
+<section class="slide">
+  <div class="split" style="grid-template-columns: 1.15fr 1fr">
+    <div class="col">
+      <h2 class="enter e-zoom">זה מרגיש קשה יותר. <span class="t">זה הסימן שזה עובד.</span></h2>
+      <p class="lead enter e-zoom" style="--d:2">Robert Bjork קרא לזה "קושי רצוי": מה שמאט את הלמידה עכשיו, מחזיק אותה אחר כך.</p>
+    </div>
+    <svg class="chart enter e-zoom" style="--d:1" viewBox="0 0 640 520" role="img" aria-label="קושי עכשיו מול זכירה אחר כך">
+      <line x1="40" y1="460" x2="620" y2="460" stroke="oklch(23% 0.025 255 / .25)" stroke-width="3"/>
+      <line x1="620" y1="40" x2="620" y2="460" stroke="oklch(23% 0.025 255 / .25)" stroke-width="3"/>
+      <path d="M600 140 C 460 150, 300 260, 60 400" fill="none" stroke="oklch(23% 0.025 255)" stroke-width="10" stroke-linecap="round"/>
+      <path d="M600 300 C 470 300, 330 200, 60 110" fill="none" stroke="oklch(53% 0.18 33)" stroke-width="10" stroke-linecap="round"/>
+      <text x="56" y="438" font-size="28" font-weight="800" fill="oklch(23% 0.025 255)">קריאה</text>
+      <text x="56" y="88" font-size="28" font-weight="800" fill="oklch(53% 0.18 33)">שליפה</text>
+      <text x="600" y="500" text-anchor="end" font-size="24" fill="oklch(23% 0.025 255 / .6)">היום</text>
+      <text x="60" y="500" font-size="24" fill="oklch(23% 0.025 255 / .6)">בעוד שבוע</text>
+    </svg>
+  </div>
+  <aside class="notes">Desirable difficulties, Bjork 1994. הגרף סכמטי, ממחיש את הכיוון של הנתונים משקף 3, לא נתונים חדשים. לסטודנטים: אם השליפה קלה, המרווח קצר מדי.</aside>
+</section>
+
+<!-- 9 · Proof restated -->
+<section class="slide">
+  <div class="col fill" style="gap:24px; align-items:flex-start">
+    <p class="num enter e-wipe" style="font-size:340px; line-height:.85; color:var(--tomato)">+21</p>
+    <h2 class="enter e-wipe" style="--d:1">נקודות אחוז של זכירה אחרי שבוע, על אותו זמן לימוד.</h2>
+    <p class="cite enter e-wipe" style="--d:2">61% מול 40%, Roediger & Karpicke, 2006</p>
+  </div>
+  <aside class="notes">שתי הקבוצות קיבלו אותו זמן כולל. ההבדל היחיד: מה עשו בזמן הזה. 61 פחות 40 הם 21 נקודות אחוז.</aside>
+</section>
+
+<!-- 10 · CTA -->
+<section class="slide hot">
+  <div class="cta">
+    <h2 class="enter e-rise">הערב, 10 דקות.</h2>
+    <div class="steps enter e-rise" style="--d:2"><span>ספר סגור</span><span>דף ריק</span><span>כל מה שזוכרים</span></div>
+  </div>
+  <aside class="notes">הקריאה לפעולה היא צעד אחד קטן, הערב. לא אפליקציה, לא שיטה שלמה. רק צעד 1 מהשקף השישי.</aside>
+</section>
+
+</div>
+</div>
+<div class="notes-panel" aria-live="polite"></div>
+<div class="deck-count"></div>
+<script src="../_engine.js"></script>
+</body>
+</html>
