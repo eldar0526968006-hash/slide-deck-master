@@ -39,14 +39,11 @@
   .folder .front .logos { display: flex; align-items: center; gap: 34px; }
   .folder .front .lg { display: block; width: auto; filter: invert(1) opacity(.9); }
   .folder .front span { font-size: 26px; font-weight: 500; color: oklch(84% .01 80); letter-spacing: .06em; }
-  .tile { position: absolute; z-index: 2; left: 50%; top: 0; width: 132px; height: 132px; margin-left: -66px; border-radius: 30px; background: #fff;
-    box-shadow: 0 18px 36px oklch(20% .02 70 / .16), 0 0 0 1px oklch(20% .02 70 / .05); display: grid; place-items: center;
-    transform: translate(var(--x), var(--y)) rotate(var(--r)); }
-  .tile svg { width: 72px; height: 72px; fill: none; stroke: var(--ink); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; max-width: none; max-height: none; }
-  .tile svg .acc { stroke: var(--accent); }
-  .tile svg .fill { fill: var(--ink); stroke: none; }
-  .t1 { --x: -300px; --y: 150px; --r: -14deg; } .t2 { --x: -150px; --y: 62px; --r: -7deg; } .t3 { --x: 0px; --y: 26px; --r: 0deg; }
-  .t4 { --x: 150px; --y: 62px; --r: 7deg; } .t5 { --x: 300px; --y: 150px; --r: 14deg; }
+  .tile { position: absolute; z-index: 2; left: 50%; top: 96px; width: 210px; height: 210px; margin-left: -105px;
+    transform: translate(var(--x), var(--y)) rotate(var(--r)); filter: drop-shadow(0 18px 20px oklch(20% .02 70 / .22)); }
+  .tile svg { width: 100%; height: 100%; display: block; max-width: none; max-height: none; }
+  .t1 { --x: -300px; --y: -12px; --r: -14deg; } .t2 { --x: -152px; --y: -66px; --r: -6deg; } .t3 { --x: 0px; --y: -84px; --r: 0deg; }
+  .t4 { --x: 152px; --y: -66px; --r: 6deg; } .t5 { --x: 300px; --y: -12px; --r: 14deg; }
   .cover h1 { font-size: 168px; font-weight: 900; letter-spacing: -0.02em; line-height: 1; }
   .cover .sub { margin-top: 22px; font-size: 44px; font-weight: 500; color: var(--dim); }
   .cover .names { margin-top: 26px; font-size: 32px; font-weight: 700; }
@@ -141,11 +138,55 @@
 <section class="slide cover">
   <div class="folder" aria-hidden="true">
     <div class="back"></div>
-    <div class="tile t1" style="--i:0"><svg viewBox="0 0 72 72"><path d="M14 30 L44 18 V54 L14 42 Z"/><path d="M44 26 C 52 28, 52 44, 44 46"/><path d="M20 42 L24 58 H32 L29 44"/><path class="acc" d="M56 24 L62 20 M58 36 H65 M56 48 L62 52"/></svg></div>
-    <div class="tile t2" style="--i:1"><svg viewBox="0 0 72 72"><path d="M12 60 H60"/><path d="M18 60 V44 M30 60 V36 M42 60 V40 M54 60 V26"/><path class="acc" d="M14 34 L28 22 L40 28 L58 12"/><path class="acc" d="M48 12 H58 V22"/></svg></div>
-    <div class="tile t3" style="--i:2"><svg viewBox="0 0 72 72"><path d="M16 24 H56 L52 62 H20 Z"/><path d="M27 30 V20 A9 9 0 0 1 45 20 V30"/><path class="acc" d="M28 44 C 28 39, 35 38, 36 43 C 37 38, 44 39, 44 44 C 44 50, 36 54, 36 54 C 36 54, 28 50, 28 44 Z"/></svg></div>
-    <div class="tile t4" style="--i:3"><svg viewBox="0 0 72 72"><circle cx="34" cy="38" r="24"/><circle cx="34" cy="38" r="14"/><circle class="fill" cx="34" cy="38" r="4"/><path class="acc" d="M36 36 L60 12 M52 10 L60 12 L62 20"/></svg></div>
-    <div class="tile t5" style="--i:4"><svg viewBox="0 0 72 72"><path d="M38 10 H60 V32 L32 60 L12 40 Z"/><circle cx="50" cy="20" r="3.5"/><path class="acc" d="M26 44 L42 28 M27 31 h.01 M41 43 h.01" style="stroke-width:4.5"/></svg></div>
+    <div class="tile t1" style="--i:0"><svg viewBox="0 0 200 200"><defs><linearGradient id="mgB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="oklch(72% 0.13 245)"/><stop offset="1" stop-color="oklch(56% 0.19 255)"/></linearGradient><linearGradient id="mgC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="oklch(90% .01 80)"/></linearGradient></defs>
+<rect x="132" y="112" width="20" height="46" rx="8" fill="oklch(21% 0.012 70)"/>
+<path d="M170 90 L80 50 Q66 110 80 170 L170 130 Z" fill="url(#mgB)"/>
+<path d="M170 90 L80 50 Q74 70 73 88 L170 104 Z" fill="#fff" opacity=".28"/>
+<ellipse cx="78" cy="110" rx="15" ry="60" fill="oklch(40% 0.15 260)"/>
+<ellipse cx="80" cy="110" rx="9" ry="50" fill="oklch(30% .1 262)"/>
+<rect x="164" y="86" width="26" height="48" rx="10" fill="url(#mgC)"/>
+<rect x="186" y="100" width="8" height="20" rx="4" fill="oklch(21% 0.012 70)"/>
+<path d="M46 82 Q34 110 46 138" fill="none" stroke="oklch(60% 0.15 150)" stroke-width="8" stroke-linecap="round"/>
+<path d="M26 64 Q8 110 26 156" fill="none" stroke="oklch(60% 0.15 150)" stroke-width="8" stroke-linecap="round" opacity=".7"/></svg></div>
+    <div class="tile t2" style="--i:1"><svg viewBox="0 0 200 200"><defs><linearGradient id="chG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="oklch(76% 0.15 150)"/><stop offset="1" stop-color="oklch(44% 0.12 152)"/></linearGradient></defs>
+<rect x="26" y="26" width="150" height="160" rx="20" fill="#fff"/>
+<rect x="26" y="26" width="150" height="160" rx="20" fill="none" stroke="oklch(88% .01 80)" stroke-width="2"/>
+<rect x="44" y="44" width="46" height="8" rx="4" fill="oklch(86% .01 80)"/><rect x="44" y="58" width="28" height="8" rx="4" fill="oklch(91% .01 80)"/>
+<rect x="46" y="128" width="22" height="40" rx="6" fill="url(#chG)"/>
+<rect x="76" y="112" width="22" height="56" rx="6" fill="url(#chG)"/>
+<rect x="106" y="94" width="22" height="74" rx="6" fill="url(#chG)"/>
+<rect x="136" y="70" width="22" height="98" rx="6" fill="url(#chG)"/>
+<path d="M44 118 L78 96 L110 84 L154 46" fill="none" stroke="oklch(56% 0.19 255)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M136 44 L158 42 L156 64" fill="none" stroke="oklch(56% 0.19 255)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="78" cy="96" r="7" fill="#fff" stroke="oklch(56% 0.19 255)" stroke-width="5"/><circle cx="110" cy="84" r="7" fill="#fff" stroke="oklch(56% 0.19 255)" stroke-width="5"/></svg></div>
+    <div class="tile t3" style="--i:2"><svg viewBox="0 0 200 200"><defs><linearGradient id="bgF" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="oklch(72% 0.13 245)"/><stop offset="1" stop-color="oklch(56% 0.19 255)"/></linearGradient><linearGradient id="bgS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="oklch(56% 0.19 255)"/><stop offset="1" stop-color="oklch(40% 0.15 260)"/></linearGradient></defs>
+<path d="M44 74 L70 60 H166 L142 74 Z" fill="oklch(32% .12 262)"/>
+<path d="M142 74 L166 60 L172 170 L150 184 Z" fill="url(#bgS)"/>
+<path d="M44 74 H142 L150 184 H36 Z" fill="url(#bgF)"/>
+<path d="M44 74 H60 L54 184 H36 Z" fill="#fff" opacity=".18"/>
+<path d="M70 80 C70 26 116 26 116 80" fill="none" stroke="oklch(21% 0.012 70)" stroke-width="7" stroke-linecap="round"/>
+<path d="M96 66 C96 20 140 20 140 70" fill="none" stroke="oklch(30% .03 70)" stroke-width="6" stroke-linecap="round" opacity=".55"/>
+<circle cx="70" cy="80" r="5" fill="oklch(21% 0.012 70)"/><circle cx="116" cy="80" r="5" fill="oklch(21% 0.012 70)"/>
+<circle cx="93" cy="132" r="28" fill="#fff"/>
+<path d="M93 146 C93 146 76 136 76 125 C76 117 86 113 93 121 C100 113 110 117 110 125 C110 136 93 146 93 146 Z" fill="oklch(60% 0.15 150)"/></svg></div>
+    <div class="tile t4" style="--i:3"><svg viewBox="0 0 200 200">
+<circle cx="104" cy="118" r="70" fill="oklch(44% 0.12 152)"/>
+<circle cx="96" cy="110" r="70" fill="oklch(60% 0.15 150)"/>
+<circle cx="96" cy="110" r="55" fill="#fff"/>
+<circle cx="96" cy="110" r="40" fill="oklch(60% 0.15 150)"/>
+<circle cx="96" cy="110" r="25" fill="#fff"/>
+<circle cx="96" cy="110" r="11" fill="oklch(56% 0.19 255)"/>
+<path d="M50 70 A62 62 0 0 1 120 52" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".35"/>
+<path d="M96 110 L170 36" stroke="oklch(21% 0.012 70)" stroke-width="7" stroke-linecap="round"/>
+<path d="M160 46 L170 18 L178 30 Z M160 46 L188 36 L176 28 Z" fill="oklch(56% 0.19 255)"/>
+<path d="M150 56 L160 28 L168 40 Z M150 56 L178 46 L166 38 Z" fill="oklch(72% 0.13 245)"/></svg></div>
+    <div class="tile t5" style="--i:4"><svg viewBox="0 0 200 200"><defs><linearGradient id="tgG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="oklch(76% 0.15 150)"/><stop offset="1" stop-color="oklch(60% 0.15 150)"/></linearGradient></defs>
+<path d="M100 68 C112 30 146 18 176 14" fill="none" stroke="oklch(21% 0.012 70)" stroke-width="4" stroke-linecap="round"/>
+<path d="M100 30 L152 62 V170 Q152 184 138 184 H62 Q48 184 48 170 V62 Z" fill="oklch(44% 0.12 152)" transform="translate(8 6)"/>
+<path d="M100 30 L152 62 V170 Q152 184 138 184 H62 Q48 184 48 170 V62 Z" fill="url(#tgG)"/>
+<path d="M100 30 L48 62 V170 Q48 184 62 184 H72 V62 Z" fill="#fff" opacity=".14"/>
+<circle cx="100" cy="70" r="10" fill="oklch(97% .008 85)"/><circle cx="100" cy="70" r="10" fill="none" stroke="oklch(44% 0.12 152)" stroke-width="3"/>
+<text x="100" y="150" text-anchor="middle" font-family="Heebo, sans-serif" font-weight="900" font-size="62" fill="#fff">%</text></svg></div>
     <div class="front"><div class="logos"><img class="lg" src="assets/durex-logo.png" alt="" style="height: 50px"><img class="lg" src="assets/apple-logo.png" alt="" style="height: 50px"></div><span>02 עבודות · <span class="en">2026</span></span></div>
   </div>
   <h1>פורטפוליו</h1>
