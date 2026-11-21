@@ -128,7 +128,10 @@ for n, s in enumerate(prs.slides, 1):
             sh._element.getparent().remove(sh._element)
     if n == 24:
         cards = [sh for sh in shapes if (not sh.has_text_frame or not txt(sh).strip()) and 100 < pt(sh.width) < 130]
-        mapping = {'1': 'grid', '2': 'check', '3': 'chat', '4': 'hammer', '5': 'easel', '6': 'pen'}
+        mapping = {'1': 'grid', '2': 'check', '3': 'chat', '4': 'hammer', '5': 'easel', '6': 'summary'}
+        for sh in T('חותמים'):
+            for r in sh.text_frame.paragraphs[0].runs:
+                if 'חותמים' in r.text: r.text = r.text.replace('חותמים?', 'סיכום')
         for card in cards:
             cx0, cx1 = pt(card.left), pt(card.left + card.width)
             inner = [sh for sh in shapes if sh is not card and cx0 <= pt(sh.left) and pt(sh.left + sh.width) <= cx1 and 200 < pt(sh.top) < 380]

@@ -8,7 +8,7 @@ Taken from the deck's sources slide (slide 32). No numbers were changed in this 
 - Oxford Word of the Year 2025: rage bait (slide 8)
 - More in Common, The Perception Gap
 - Andrew Lewis, 2010 (slide 11)
-- Kosmyna et al., Your Brain on ChatGPT, MIT Media Lab, 2025 (arXiv preprint): 83% / ~11% (slide 20)
-- Scientific American, critical review of the MIT study, 2025 (slide 19)
+- Kosmyna et al., Your Brain on ChatGPT, MIT Media Lab, 2025 (arXiv preprint): 83% / ~11% (slide 18)
+- Scientific American, critical review of the MIT study, 2025 (its slide was removed; still listed on the sources slide)
 
-Open gap: slide 33 (study of ~1,000 high-school students) has no source in the deck yet.
+Slide numbers refer to the current 31-slide version.
