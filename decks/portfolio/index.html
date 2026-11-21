@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>פורטפוליו · חדשנות בפרסום</title>
+<meta name="description" content="פורטפוליו חדשנות בפרסום: Durex · Can You Break the Durex Layer?, Apple · Splash. אלעד רז ואלדר ביכלר.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&family=Inter:wght@600;700&family=Roboto+Slab:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../_base.css">
+<style>
+  /* Art direction A · Gallery: warm paper, black ink, one brand colour per case. */
+  :root {
+    --paper: oklch(97.2% 0.008 85);
+    --ink:   oklch(21% 0.012 70);
+    --dim:   oklch(43% 0.012 70);
+    --line:  oklch(88% 0.01 80);
+    --durex: oklch(60% 0.15 150);      /* Durex green #239B4F */
+    --durex-ink: oklch(41% 0.11 152);  /* text-safe green on paper */
+    --apple: oklch(55% 0.19 255);      /* Apple blue #0071E3 */
+    --apple-ink: oklch(49% 0.19 257);
+    --apple-soft: oklch(93% 0.025 250);
+    --stage-bg: var(--paper); --slide-bg: var(--paper);
+    --ease-out: cubic-bezier(.22,1,.36,1);
+    --accent: oklch(55% 0.19 255);
+  }
+  .slide { font-family: 'Heebo', sans-serif; color: var(--ink); background: var(--paper); box-sizing: border-box; }
+  p, h1, h2 { margin: 0; }
+  .en { direction: ltr; unicode-bidi: isolate; }
+  .count { direction: ltr; position: absolute; top: 64px; left: 120px; font-size: 24px; font-weight: 500; color: var(--dim); letter-spacing: .04em; }
+  .count b { color: var(--ink); font-weight: 700; }
+
+  /* ---------- COVER ---------- */
+  .cover { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .folder { position: relative; width: 760px; height: 500px; margin-bottom: 44px; }
+  .folder .back { position: absolute; inset: 170px 40px 0; background: var(--ink); border-radius: 30px; }
+  .folder .back::before { content: ''; position: absolute; top: -44px; right: 0; width: 250px; height: 64px; background: var(--ink); border-radius: 22px 22px 0 0; }
+  .folder .front { position: absolute; inset: 290px 0 0; z-index: 3; background: oklch(29% 0.012 70); border-radius: 26px;
+    box-shadow: 0 30px 60px oklch(20% .02 70 / .22); display: flex; align-items: flex-end; justify-content: space-between; padding: 0 52px 40px; box-sizing: border-box; }
+  .folder .front .logos { display: flex; align-items: center; gap: 34px; }
+  .folder .front .lg { display: block; width: auto; filter: invert(1) opacity(.9); }
+  .folder .front span { font-size: 26px; font-weight: 500; color: oklch(84% .01 80); letter-spacing: .06em; }
+  .tile { position: absolute; z-index: 2; left: 50%; top: 0; width: 132px; height: 132px; margin-left: -66px; border-radius: 30px; background: #fff;
+    box-shadow: 0 18px 36px oklch(20% .02 70 / .16), 0 0 0 1px oklch(20% .02 70 / .05); display: grid; place-items: center;
+    transform: translate(var(--x), var(--y)) rotate(var(--r)); }
+  .tile svg { width: 72px; height: 72px; fill: none; stroke: var(--ink); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; max-width: none; max-height: none; }
+  .tile svg .acc { stroke: var(--accent); }
+  .tile svg .fill { fill: var(--ink); stroke: none; }
+  .t1 { --x: -300px; --y: 150px; --r: -14deg; } .t2 { --x: -150px; --y: 62px; --r: -7deg; } .t3 { --x: 0px; --y: 26px; --r: 0deg; }
+  .t4 { --x: 150px; --y: 62px; --r: 7deg; } .t5 { --x: 300px; --y: 150px; --r: 14deg; }
+  .cover h1 { font-size: 168px; font-weight: 900; letter-spacing: -0.02em; line-height: 1; }
+  .cover .sub { margin-top: 22px; font-size: 44px; font-weight: 500; color: var(--dim); }
+  .cover .names { margin-top: 26px; font-size: 32px; font-weight: 700; }
+  .cover .names i { font-style: normal; color: var(--dim); font-weight: 400; padding: 0 12px; }
+  /* cover entrance: the marketing icons pop out of the folder and fan open (1.3s) */
+  .slide.active .tile { animation: popOut .85s var(--ease-out) both; animation-delay: calc(.2s + var(--i) * .07s); }
+  @keyframes popOut { 0% { transform: translate(0, 300px) rotate(0) scale(.7); } 100% { transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(1); } }
+  .slide.active.cover h1, .slide.active.cover .sub, .slide.active.cover .names { animation: rise .7s var(--ease-out) both; }
+  .slide.active.cover .sub { animation-delay: .08s; } .slide.active.cover .names { animation-delay: .16s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+
+  /* ---------- CASE ---------- */
+  .case { display: grid; grid-template-columns: 760px 1fr; gap: 88px; padding: 120px 120px 104px; }
+  .case .text { display: flex; flex-direction: column; gap: 30px; min-width: 0; }
+  .brand { display: flex; align-items: center; gap: 20px; }
+  .brand .logo { display: block; width: auto; }
+  .brand .with { font-family: "Inter", sans-serif; font-size: 34px; font-weight: 700; direction: ltr; }
+  .brand .tag { font-size: 24px; font-weight: 700; padding: 8px 20px; border-radius: 999px; border: 2px solid currentColor; }
+  .case h1 { direction: ltr; text-align: right; line-height: .96; }
+  .case .slogan { direction: ltr; text-align: right; font-size: 40px; font-weight: 600; color: var(--dim); margin-top: -14px; }
+  .rows { display: flex; flex-direction: column; gap: 22px; }
+  .row { display: grid; grid-template-columns: 148px 1fr; gap: 20px; align-items: baseline; padding-top: 20px; border-top: 2px solid var(--line); }
+  .row small { font-size: 26px; font-weight: 800; }
+  .row p { font-size: 32px; line-height: 1.38; }
+  .visual { position: relative; }
+  .visual img { position: absolute; display: block; object-fit: cover; border-radius: 28px; box-shadow: 0 30px 60px oklch(22% .02 70 / .16), 0 0 0 1px oklch(22% .02 70 / .06); }
+  .demo { position: absolute; top: 18px; left: 0; font-size: 24px; font-weight: 500; color: var(--dim); }
+
+  /* Durex */
+    .durex .tag, .durex .row small { color: var(--durex-ink); }
+  .durex h1 { font-family: 'Roboto Slab', serif; font-weight: 900; font-size: 84px; }
+  .durex h1 span { display: block; font-size: 36px; font-weight: 700; letter-spacing: .2em; color: var(--dim); margin-bottom: 10px; }
+  .scale { display: flex; align-items: baseline; gap: 26px; direction: ltr; justify-content: flex-end; font-family: 'Roboto Slab', serif; font-weight: 900; color: var(--ink); }
+  .scale-wrap { display: grid; grid-template-columns: 148px 1fr; gap: 20px; align-items: end; padding-top: 20px; border-top: 2px solid var(--line); }
+  .scale-wrap small { font-size: 26px; font-weight: 800; color: var(--durex-ink); line-height: 1.3; }
+  .scale b:nth-child(1){font-size:32px} .scale b:nth-child(2){font-size:40px} .scale b:nth-child(3){font-size:50px} .scale b:nth-child(4){font-size:62px} .scale b:nth-child(5){font-size:78px;color:var(--durex-ink)}
+    .durex .golf { right: 0; top: 88px; width: 380px; height: 680px; }
+  .durex .screen { left: 0; top: 230px; width: 350px; height: 398px; }
+  .layer { position: absolute; left: 352px; top: 158px; width: 100px; height: 540px; z-index: 4; overflow: visible; }
+  .layer path { fill: none; stroke: var(--durex); stroke-width: 5; stroke-linecap: round; }
+  .ball { position: absolute; z-index: 6; width: 44px; height: 44px; border-radius: 50%; background: #fff; box-shadow: 0 8px 18px oklch(20% .03 70 / .3), 0 0 0 2px oklch(80% .01 80) inset;
+    left: 560px; top: 700px; }
+  /* Story: ball flies left, the layer dents, holds, springs back; the ball drops; the coupon screen appears. 1.4s */
+  .slide.active .ball { animation: ballFly 1.15s cubic-bezier(.3,.6,.4,1) .15s both; }
+  @keyframes ballFly {
+    0%   { transform: translate(0,0) scale(.9); }
+    45%  { transform: translate(-112px,-330px) scale(1); }
+    62%  { transform: translate(-156px,-330px) scale(1); }
+    100% { transform: translate(-136px,24px) scale(1); }
+  }
+  .slide.active .layer path { animation: dent 1s var(--ease-out) .15s both; }
+  @keyframes dent {
+    0%,40% { d: path("M70 0 C 70 180, 70 360, 70 540"); }
+    55%    { d: path("M70 0 C 70 120, 0 180, 70 540"); }
+    100%   { d: path("M70 0 C 70 180, 70 360, 70 540"); }
+  }
+  .slide.active.durex .screen { animation: pop .5s var(--ease-out) .85s both; }
+  .slide.active.durex .golf { animation: rise .6s var(--ease-out) both; }
+  @keyframes pop { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: none; } }
+
+  /* Apple */
+    .apple .tag, .apple .row small { color: var(--apple-ink); }
+  .apple h1 { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 150px; letter-spacing: -0.04em; }
+  .apple .slogan { font-family: 'Inter', sans-serif; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding-top: 20px; border-top: 2px solid var(--line); }
+  .stats b { display: block; font-family: 'Inter', sans-serif; font-size: 56px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; direction: ltr; text-align: right; }
+  .stats b.hi { color: var(--apple-ink); }
+  .stats span { font-size: 24px; color: var(--dim); }
+    .apple .play { right: 0; top: 88px; width: 100%; height: 470px; }
+  .apple .booth { right: 0; top: 590px; width: calc(50% - 15px); height: 266px; }
+  .apple .score { left: 0; top: 590px; width: calc(50% - 15px); height: 266px; }
+    .drop { position: absolute; z-index: 6; left: 50%; top: 88px; width: 34px; height: 46px; margin-left: -17px; background: var(--apple);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; clip-path: path("M17 0 C 17 0, 34 24, 34 30 A 17 17 0 0 1 0 30 C 0 24, 17 0, 17 0 Z"); border-radius: 0; opacity: 0; }
+  .ripple { position: absolute; z-index: 6; left: 50%; top: 323px; width: 60px; height: 60px; margin: -30px 0 0 -30px; border-radius: 50%; border: 5px solid #fff; opacity: 0; }
+  .slide.active .drop { animation: dropFall .55s cubic-bezier(.5,0,.9,.6) .1s both; }
+  @keyframes dropFall { 0% { opacity: 1; transform: translateY(-60px); } 92% { opacity: 1; } 100% { opacity: 0; transform: translateY(230px); } }
+  .slide.active .ripple { animation: ripple .7s var(--ease-out) .62s both; }
+  @keyframes ripple { 0% { opacity: .95; transform: scale(.3); } 100% { opacity: 0; transform: scale(5); } }
+  .slide.active.apple .play { animation: rise .6s var(--ease-out) both; }
+  .slide.active.apple .booth { animation: rise .6s var(--ease-out) .55s both; }
+  .slide.active.apple .score { animation: rise .6s var(--ease-out) .65s both; }
+
+  @media (prefers-reduced-motion: reduce) { .slide.active * { animation: none !important; } }
+  aside.notes { display: none; }
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+<div class="deck-stage">
+
+<!-- 1 · COVER -->
+<section class="slide cover">
+  <div class="folder" aria-hidden="true">
+    <div class="back"></div>
+    <div class="tile t1" style="--i:0"><svg viewBox="0 0 72 72"><path d="M14 30 L44 18 V54 L14 42 Z"/><path d="M44 26 C 52 28, 52 44, 44 46"/><path d="M20 42 L24 58 H32 L29 44"/><path class="acc" d="M56 24 L62 20 M58 36 H65 M56 48 L62 52"/></svg></div>
+    <div class="tile t2" style="--i:1"><svg viewBox="0 0 72 72"><path d="M12 60 H60"/><path d="M18 60 V44 M30 60 V36 M42 60 V40 M54 60 V26"/><path class="acc" d="M14 34 L28 22 L40 28 L58 12"/><path class="acc" d="M48 12 H58 V22"/></svg></div>
+    <div class="tile t3" style="--i:2"><svg viewBox="0 0 72 72"><path d="M16 24 H56 L52 62 H20 Z"/><path d="M27 30 V20 A9 9 0 0 1 45 20 V30"/><path class="acc" d="M28 44 C 28 39, 35 38, 36 43 C 37 38, 44 39, 44 44 C 44 50, 36 54, 36 54 C 36 54, 28 50, 28 44 Z"/></svg></div>
+    <div class="tile t4" style="--i:3"><svg viewBox="0 0 72 72"><circle cx="34" cy="38" r="24"/><circle cx="34" cy="38" r="14"/><circle class="fill" cx="34" cy="38" r="4"/><path class="acc" d="M36 36 L60 12 M52 10 L60 12 L62 20"/></svg></div>
+    <div class="tile t5" style="--i:4"><svg viewBox="0 0 72 72"><path d="M38 10 H60 V32 L32 60 L12 40 Z"/><circle cx="50" cy="20" r="3.5"/><path class="acc" d="M26 44 L42 28 M27 31 h.01 M41 43 h.01" style="stroke-width:4.5"/></svg></div>
+    <div class="front"><div class="logos"><img class="lg" src="assets/durex-logo.png" alt="" style="height: 50px"><img class="lg" src="assets/apple-logo.png" alt="" style="height: 50px"></div><span>02 עבודות · <span class="en">2026</span></span></div>
+  </div>
+  <h1>פורטפוליו</h1>
+  <p class="sub">חדשנות בפרסום</p>
+  <p class="names">אלעד רז <i>·</i> אלדר ביכלר</p>
+  <aside class="notes">פורטפוליו בקורס חדשנות בפרסום. שתי עבודות: Durex ו-Apple. בשתיהן לקחנו את ההבטחה של המותג, הגנה אצל Durex ועמידות אצל Apple, והפכנו אותה למשחק ברחוב שהקהל מנסה בעצמו.</aside>
+</section>
+
+<!-- 2 · DUREX -->
+<section class="slide case durex">
+  <div class="text">
+    <div class="brand"><img class="logo" src="assets/durex-logo.png" alt="Durex" style="height: 72px"><span class="tag">חוצות אינטראקטיבי</span></div>
+    <h1><span>CAN YOU BREAK THE</span>DUREX LAYER?</h1>
+    <div class="rows">
+      <div class="row"><small>מסר</small><p><span class="en">Not Today, Champ.</span> שום עוצמה לא חודרת את שכבת ההגנה.</p></div>
+      <div class="row"><small>מטרה</small><p>להפוך את מסר ההגנה של המודעה לחוויה ברחוב.</p></div>
+      <div class="row"><small>הרעיון</small><p>חובטים בכדור גולף לעבר שכבת דורקס. המסך מודד את המהירות, השכבה לא נשברת, וכל חבטה מסתיימת בקופון לפי העוצמה.</p></div>
+    </div>
+    <div class="scale-wrap"><small>קופון לפי עוצמה</small><div class="scale"><b>10%</b><b>20%</b><b>30%</b><b>40%</b><b>50%</b></div></div>
+  </div>
+  <div class="visual">
+    <span class="demo">הדמיית קונספט</span>
+    <img class="golf" src="assets/durex-golf.jpg" alt="עמדת גולף של דורקס ברחוב: אדם חובט כדור לעבר העמדה, והמסך מודד את מהירות הכדור">
+    <img class="screen" src="assets/durex-screen.jpg" alt="מסך העמדה אחרי החבטה: Not Strong Enough, Champ וקופון של 30% הנחה עם קוד QR">
+    <svg class="layer" viewBox="0 0 100 540" aria-hidden="true"><path d="M70 0 C 70 180, 70 360, 70 540"/></svg>
+    <i class="ball" aria-hidden="true"></i>
+  </div>
+  <p class="count"><b>2</b> / 3</p>
+  <aside class="notes">Durex. ההבטחה של המותג היא הגנה, אז הזמנו את העוברים ושבים לנסות לשבור אותה. בעמדת חוצות חובטים בכדור גולף לעבר "שכבת דורקס"; המסך מודד את מהירות הכדור, השכבה אף פעם לא נשברת, והמסך עונה: Not strong enough, champ. גם הניסיון מתוגמל: קופון לאתר בין 10% ל-50% לפי עוצמת החבטה. התמונות הן הדמיה של הקונספט.</aside>
+</section>
+
+<!-- 3 · APPLE -->
+<section class="slide case apple">
+  <div class="text">
+    <div class="brand"><img class="logo" src="assets/apple-logo.png" alt="Apple" style="height: 66px"><span class="with">× iDigital</span><span class="tag">Gamification · דוכן ארקייד</span></div>
+    <h1>Splash.</h1>
+    <p class="slogan">Relax, it’s iPhone.</p>
+    <div class="rows">
+      <div class="row"><small>מסר</small><p>אייפון שאפשר לסמוך עליו בכל מצב.</p></div>
+      <div class="row"><small>מטרה</small><p>להמחיש את האמינות של האייפון, ובראשה העמידות במים, דרך משחק.</p></div>
+      <div class="row"><small>הרעיון</small><p>יורים בתותחי מים על אייפונים אמיתיים שנעים על מסילות. הם נרטבים, ממשיכים לעבוד וסופרים את הניקוד.</p></div>
+    </div>
+    <div class="stats">
+      <div><b>IP68</b><span>עמידות במים</span></div>
+      <div><b>30s</b><span>סבב משחק</span></div>
+      <div><b class="hi">₪300</b><span>זיכוי מקסימלי</span></div>
+    </div>
+  </div>
+  <div class="visual">
+    <span class="demo">הדמיית קונספט</span>
+    <img class="play" src="assets/apple-play.jpg" alt="שחקנים יורים בתותחי מים על אייפונים שנעים על מסילות; האייפונים רטובים וממשיכים לעבוד">
+    <img class="booth" src="assets/apple-booth.jpg" alt="דוכן ארקייד לבן של אפל בשם SPLASH ברחבה עירונית">
+    <img class="score" src="assets/apple-score.jpg" alt="מסך אייפד בדוכן: GAME OVER, ניקוד שלושת השחקנים וזיכוי בהיי דיגיטל">
+    <i class="drop" aria-hidden="true"></i><i class="ripple" aria-hidden="true"></i>
+  </div>
+  <p class="count"><b>3</b> / 3</p>
+  <aside class="notes">Apple, בשיתוף היי דיגיטל. במקום להגיד "עמיד במים", נתנו לאנשים לנסות להרטיב אייפון. בדוכן ארקייד ברחבה יורים בתותחי מים על אייפונים אמיתיים שנעים על מסילות. האייפונים נרטבים, ממשיכים לעבוד וסופרים ניקוד. סבב של 30 שניות, ובסופו זיכוי בהיי דיגיטל לפי הניקוד, עד 300 שקל. IP68 הוא תקן העמידות במים של האייפון. התמונות הן הדמיה של הקונספט.</aside>
+</section>
+
+</div>
+</div>
+<script src="../_engine.js"></script>
+</body>
+</html>
